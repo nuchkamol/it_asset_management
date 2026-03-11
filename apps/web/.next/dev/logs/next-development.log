@@ -1,0 +1,336 @@
+[00:00:01.627] Server  LOG     ✓ Ready in 1154ms
+[00:00:08.940] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:38.649] Server  LOG     ✓ Compiled in 85ms
+[00:00:54.610] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:02:06.987] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:48:11.529] Server  LOG       Reload env: .env
+[00:48:13.167] Server  LOG       Reload env: .env
+[01:04:52.667] Server  LOG     ✓ Compiled in 292ms
+[01:09:13.217] Server  ERROR   ⨯ ./apps/web/app/(auth)/login/page.tsx:4:1
+Module not found: Can't resolve './_components/LoginContent'
+  2 |
+  3 | import { Suspense } from "react";
+> 4 | import LoginContent from "./_components/LoginContent";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | export default function LoginPage() {
+  7 |   return (
+
+
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/app/(auth)/login/page.tsx [Client Component Browser]
+    ./apps/web/app/(auth)/login/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/app/(auth)/login/page.tsx [Client Component SSR]
+    ./apps/web/app/(auth)/login/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[01:09:13.219] Server  ERROR   ⨯ ./apps/web/app/(auth)/login/page.tsx:4:1
+Module not found: Can't resolve './_components/LoginContent'
+  2 |
+  3 | import { Suspense } from "react";
+> 4 | import LoginContent from "./_components/LoginContent";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | export default function LoginPage() {
+  7 |   return (
+
+
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/app/(auth)/login/page.tsx [Client Component Browser]
+    ./apps/web/app/(auth)/login/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/app/(auth)/login/page.tsx [Client Component SSR]
+    ./apps/web/app/(auth)/login/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[01:09:13.219] Server  ERROR   ⨯ ./apps/web/app/(auth)/login/page.tsx:4:1
+Module not found: Can't resolve './_components/LoginContent'
+  2 |
+  3 | import { Suspense } from "react";
+> 4 | import LoginContent from "./_components/LoginContent";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | export default function LoginPage() {
+  7 |   return (
+
+
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/app/(auth)/login/page.tsx [Client Component Browser]
+    ./apps/web/app/(auth)/login/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/app/(auth)/login/page.tsx [Client Component SSR]
+    ./apps/web/app/(auth)/login/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[01:09:13.221] Server  ERROR   ⨯ ./apps/web/app/(auth)/login/page.tsx:4:1
+Module not found: Can't resolve './_components/LoginContent'
+  2 |
+  3 | import { Suspense } from "react";
+> 4 | import LoginContent from "./_components/LoginContent";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | export default function LoginPage() {
+  7 |   return (
+
+
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/app/(auth)/login/page.tsx [Client Component Browser]
+    ./apps/web/app/(auth)/login/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/app/(auth)/login/page.tsx [Client Component SSR]
+    ./apps/web/app/(auth)/login/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[01:09:13.222] Server  ERROR   ⨯ ./apps/web/app/(auth)/login/page.tsx:4:1
+Module not found: Can't resolve './_components/LoginContent'
+  2 |
+  3 | import { Suspense } from "react";
+> 4 | import LoginContent from "./_components/LoginContent";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | export default function LoginPage() {
+  7 |   return (
+
+
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/app/(auth)/login/page.tsx [Client Component Browser]
+    ./apps/web/app/(auth)/login/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/app/(auth)/login/page.tsx [Client Component SSR]
+    ./apps/web/app/(auth)/login/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[01:09:13.223] Server  ERROR   ⨯ ./apps/web/app/(auth)/login/page.tsx:4:1
+Module not found: Can't resolve './_components/LoginContent'
+  2 |
+  3 | import { Suspense } from "react";
+> 4 | import LoginContent from "./_components/LoginContent";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | export default function LoginPage() {
+  7 |   return (
+
+
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/app/(auth)/login/page.tsx [Client Component Browser]
+    ./apps/web/app/(auth)/login/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/app/(auth)/login/page.tsx [Client Component SSR]
+    ./apps/web/app/(auth)/login/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[01:09:13.223] Server  ERROR   ⨯ ./apps/web/app/(auth)/login/page.tsx:4:1
+Module not found: Can't resolve './_components/LoginContent'
+  2 |
+  3 | import { Suspense } from "react";
+> 4 | import LoginContent from "./_components/LoginContent";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | export default function LoginPage() {
+  7 |   return (
+
+
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/app/(auth)/login/page.tsx [Client Component Browser]
+    ./apps/web/app/(auth)/login/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/app/(auth)/login/page.tsx [Client Component SSR]
+    ./apps/web/app/(auth)/login/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[01:09:13.223] Server  ERROR   ⨯ ./apps/web/app/(auth)/login/page.tsx:4:1
+Module not found: Can't resolve './_components/LoginContent'
+  2 |
+  3 | import { Suspense } from "react";
+> 4 | import LoginContent from "./_components/LoginContent";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | export default function LoginPage() {
+  7 |   return (
+
+
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/app/(auth)/login/page.tsx [Client Component Browser]
+    ./apps/web/app/(auth)/login/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/app/(auth)/login/page.tsx [Client Component SSR]
+    ./apps/web/app/(auth)/login/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[01:09:13.226] Server  ERROR   ⨯ ./apps/web/app/(auth)/login/page.tsx:4:1
+Module not found: Can't resolve './_components/LoginContent'
+  2 |
+  3 | import { Suspense } from "react";
+> 4 | import LoginContent from "./_components/LoginContent";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | export default function LoginPage() {
+  7 |   return (
+
+
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/app/(auth)/login/page.tsx [Client Component Browser]
+    ./apps/web/app/(auth)/login/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/app/(auth)/login/page.tsx [Client Component SSR]
+    ./apps/web/app/(auth)/login/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[01:09:13.226] Server  ERROR   ⨯ ./apps/web/app/(auth)/login/page.tsx:4:1
+Module not found: Can't resolve './_components/LoginContent'
+  2 |
+  3 | import { Suspense } from "react";
+> 4 | import LoginContent from "./_components/LoginContent";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | export default function LoginPage() {
+  7 |   return (
+
+
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/app/(auth)/login/page.tsx [Client Component Browser]
+    ./apps/web/app/(auth)/login/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/app/(auth)/login/page.tsx [Client Component SSR]
+    ./apps/web/app/(auth)/login/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[01:09:13.228] Server  ERROR   ⨯ ./apps/web/app/(auth)/login/page.tsx:4:1
+Module not found: Can't resolve './_components/LoginContent'
+  2 |
+  3 | import { Suspense } from "react";
+> 4 | import LoginContent from "./_components/LoginContent";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | export default function LoginPage() {
+  7 |   return (
+
+
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/app/(auth)/login/page.tsx [Client Component Browser]
+    ./apps/web/app/(auth)/login/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/app/(auth)/login/page.tsx [Client Component SSR]
+    ./apps/web/app/(auth)/login/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[01:09:13.229] Server  ERROR   ⨯ ./apps/web/app/(auth)/login/page.tsx:4:1
+Module not found: Can't resolve './_components/LoginContent'
+  2 |
+  3 | import { Suspense } from "react";
+> 4 | import LoginContent from "./_components/LoginContent";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | export default function LoginPage() {
+  7 |   return (
+
+
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/app/(auth)/login/page.tsx [Client Component Browser]
+    ./apps/web/app/(auth)/login/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/app/(auth)/login/page.tsx [Client Component SSR]
+    ./apps/web/app/(auth)/login/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[01:13:28.422] Browser ERROR   ./apps/web/app/(auth)/login/page.tsx:4:1
+Module not found: Can't resolve './_components/LoginContent'
+  2 |
+  3 | import { Suspense } from "react";
+> 4 | import LoginContent from "./_components/LoginContent";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | export default function LoginPage() {
+  7 |   return (
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/app/(auth)/login/page.tsx [Client Component Browser]
+    ./apps/web/app/(auth)/login/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/app/(auth)/login/page.tsx [Client Component SSR]
+    ./apps/web/app/(auth)/login/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+[01:13:28.422] Browser ERROR   ./apps/web/app/(auth)/login/page.tsx:4:1
+Module not found: Can't resolve './_components/LoginContent'
+  2 |
+  3 | import { Suspense } from "react";
+> 4 | import LoginContent from "./_components/LoginContent";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | export default function LoginPage() {
+  7 |   return (
+
+Import traces:
+  Client Component Browser:
+    ./apps/web/app/(auth)/login/page.tsx [Client Component Browser]
+    ./apps/web/app/(auth)/login/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./apps/web/app/(auth)/login/page.tsx [Client Component SSR]
+    ./apps/web/app/(auth)/login/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found

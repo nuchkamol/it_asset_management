@@ -1,0 +1,3025 @@
+module.exports = [
+"[project]/apps/web/lib/sortingToServer.ts [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "sortingToServer",
+    ()=>sortingToServer
+]);
+function sortingToServer(sorting) {
+    if (!Array.isArray(sorting) || sorting.length === 0) return {};
+    const first = sorting[0];
+    return {
+        sortBy: String(first.id),
+        sortOrder: first.desc ? "desc" : "asc"
+    };
+}
+}),
+"[project]/apps/web/hooks/useServerTableController.ts [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "useServerTableController",
+    ()=>useServerTableController
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$sortingToServer$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/lib/sortingToServer.ts [app-ssr] (ecmascript)");
+// hooks/useServerTableController.ts
+"use client";
+;
+;
+function useServerTableController(opts) {
+    const { pageSize, defaultSort, domainFilters, setDomainFilters, toSimple, fromSimple, resetDeps = [] } = opts;
+    // Pagination
+    const [pagination, setPagination] = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useState({
+        pageIndex: 0,
+        pageSize
+    });
+    // Sorting
+    const [sorting, setSorting] = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useState([
+        {
+            id: String(defaultSort.id),
+            desc: !!defaultSort.desc
+        }
+    ]);
+    // Domain -> Simple (UI)
+    const simpleFilters = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useMemo(()=>toSimple(domainFilters), [
+        domainFilters,
+        toSimple
+    ]);
+    const onSimpleFiltersChange = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useCallback((sf)=>setDomainFilters(fromSimple(sf)), [
+        fromSimple,
+        setDomainFilters
+    ]);
+    // reset page เมื่อ deps ใน filter เปลี่ยน
+    __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useEffect(()=>{
+        setPagination((p)=>p.pageIndex === 0 ? p : {
+                ...p,
+                pageIndex: 0
+            });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, resetDeps);
+    // query พร้อมส่ง server
+    const serverSort = (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$sortingToServer$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["sortingToServer"])(sorting);
+    const serverQuery = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useMemo(()=>({
+            pageIndex: pagination.pageIndex,
+            pageSize: pagination.pageSize,
+            sortBy: serverSort.sortBy,
+            sortOrder: serverSort.sortOrder
+        }), [
+        pagination.pageIndex,
+        pagination.pageSize,
+        serverSort.sortBy,
+        serverSort.sortOrder
+    ]);
+    return {
+        simpleFilters,
+        onSimpleFiltersChange,
+        pagination,
+        setPagination,
+        sorting,
+        setSorting,
+        serverQuery
+    };
+}
+}),
+"[project]/apps/web/components/table/DataTableHeader.tsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "DataTableHeader",
+    ()=>DataTableHeader
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
+// ปรับ path ให้ตรงกับโปรเจกต์ของคุณ ถ้าคุณย้าย type ไปไว้ที่ 'types/table'
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$cn$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/lib/cn.ts [app-ssr] (ecmascript)");
+'use client';
+;
+;
+function DataTableHeader({ columns, sorting, onToggleSort, size, defaultColMinWidth, leadingHeaderCell }) {
+    const sizeClass = {
+        xs: 'px-2 py-1 text-[12px]',
+        sm: 'px-3 py-2 text-[13px]',
+        md: 'px-3 py-2 text-[14px]'
+    }[size];
+    const alignToClass = (align)=>align === 'center' ? 'text-center' : align === 'right' ? 'text-right' : 'text-left';
+    // ใช้ตัวแรกเป็นคอลัมน์ sorting หลัก
+    const current = sorting?.[0];
+    const activeId = current?.id ?? null;
+    const isDesc = current?.desc ?? false;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("thead", {
+        className: "sticky top-0 z-10 bg-slate-50",
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
+            children: [
+                leadingHeaderCell,
+                columns.map((col)=>{
+                    const colId = String(col.accessorKey);
+                    const isActive = activeId === colId;
+                    const indicator = isActive ? isDesc ? ' 🔽' : ' 🔼' : '';
+                    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$cn$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])('font-semibold text-slate-700', sizeClass, alignToClass(col.align), col.headerClassName),
+                        style: {
+                            minWidth: col.width ?? defaultColMinWidth,
+                            whiteSpace: 'nowrap'
+                        },
+                        "aria-sort": isActive ? isDesc ? 'descending' : 'ascending' : 'none',
+                        scope: "col",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                            type: "button",
+                            onClick: ()=>onToggleSort?.(col),
+                            className: "inline-flex items-center gap-1 bg-transparent font-semibold text-slate-700 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500",
+                            style: {
+                                border: 'none',
+                                cursor: 'pointer'
+                            },
+                            "aria-pressed": isActive,
+                            "aria-label": isActive ? `Sort by ${colId} ${isDesc ? 'descending' : 'ascending'}` : `Sort by ${colId}`,
+                            children: [
+                                col.header,
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    "aria-hidden": true,
+                                    children: indicator
+                                }, void 0, false, {
+                                    fileName: "[project]/apps/web/components/table/DataTableHeader.tsx",
+                                    lineNumber: 88,
+                                    columnNumber: 17
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/apps/web/components/table/DataTableHeader.tsx",
+                            lineNumber: 75,
+                            columnNumber: 15
+                        }, this)
+                    }, String(col.id ?? col.accessorKey), false, {
+                        fileName: "[project]/apps/web/components/table/DataTableHeader.tsx",
+                        lineNumber: 62,
+                        columnNumber: 13
+                    }, this);
+                })
+            ]
+        }, void 0, true, {
+            fileName: "[project]/apps/web/components/table/DataTableHeader.tsx",
+            lineNumber: 52,
+            columnNumber: 7
+        }, this)
+    }, void 0, false, {
+        fileName: "[project]/apps/web/components/table/DataTableHeader.tsx",
+        lineNumber: 51,
+        columnNumber: 5
+    }, this);
+}
+}),
+"[project]/apps/web/components/table/DataTableBody.tsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "DataTableBody",
+    ()=>DataTableBody
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$cn$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/lib/cn.ts [app-ssr] (ecmascript)");
+// src/components/datatable/DataTableBody.tsx
+'use client';
+;
+;
+function DataTableBody({ columns, rows, onRowActivate, variant, size, defaultColMinWidth, renderLeadingCell }) {
+    const rowBase = 'border-b border-slate-100 outline-none focus-visible:ring-2 focus-visible:ring-blue-300';
+    const rowHover = 'hover:bg-slate-50';
+    const rowStriped = variant === 'striped' ? 'odd:bg-slate-50' : '';
+    const tdSize = {
+        xs: 'px-2 py-1 text-[12px]',
+        sm: 'px-3 py-2 text-[13px]',
+        md: 'px-3 py-2 text-[14px]'
+    }[size];
+    const alignToClass = (align)=>align === 'center' ? 'text-center' : align === 'right' ? 'text-right' : 'text-left';
+    // ป้องกัน row-activate เมื่อ target เป็น element interactive
+    const isInteractive = (el)=>!!el?.closest('button,a,input,textarea,select,label,[role="button"]');
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
+        className: "bg-white",
+        children: rows.map((row, ri)=>{
+            const key = row.id ?? ri;
+            const handleRowClick = (e)=>{
+                if (isInteractive(e.target)) return;
+                onRowActivate(row);
+            };
+            const handleRowKeyDown = (e)=>{
+                if (isInteractive(e.target)) return;
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    onRowActivate(row);
+                }
+            };
+            return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
+                className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$cn$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])(rowBase, rowHover, rowStriped, 'cursor-pointer'),
+                tabIndex: 0,
+                onClick: handleRowClick,
+                onKeyDown: handleRowKeyDown,
+                children: [
+                    renderLeadingCell && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$cn$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])(tdSize, 'w-10 align-middle'),
+                        onClick: (e)=>e.stopPropagation(),
+                        children: renderLeadingCell(row, ri)
+                    }, void 0, false, {
+                        fileName: "[project]/apps/web/components/table/DataTableBody.tsx",
+                        lineNumber: 77,
+                        columnNumber: 15
+                    }, this),
+                    columns.map((c)=>{
+                        const value = row[c.accessorKey];
+                        const cellKey = String(c.id ?? c.accessorKey ?? `col-${ri}`);
+                        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                            className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$cn$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])(tdSize, 'text-slate-900', alignToClass(c.align), c.cellClassName),
+                            style: {
+                                minWidth: c.width ?? defaultColMinWidth,
+                                whiteSpace: 'nowrap'
+                            },
+                            onClick: (e)=>{
+                                const target = e.target;
+                                if (isInteractive(target)) e.stopPropagation();
+                            },
+                            children: typeof c.cell === 'function' ? c.cell(value, row, ri) : String(value ?? '')
+                        }, cellKey, false, {
+                            fileName: "[project]/apps/web/components/table/DataTableBody.tsx",
+                            lineNumber: 87,
+                            columnNumber: 17
+                        }, this);
+                    })
+                ]
+            }, key, true, {
+                fileName: "[project]/apps/web/components/table/DataTableBody.tsx",
+                lineNumber: 68,
+                columnNumber: 11
+            }, this);
+        })
+    }, void 0, false, {
+        fileName: "[project]/apps/web/components/table/DataTableBody.tsx",
+        lineNumber: 50,
+        columnNumber: 5
+    }, this);
+}
+}),
+"[project]/apps/web/components/table/DataTableStates.tsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "EmptyBody",
+    ()=>EmptyBody,
+    "ErrorBody",
+    ()=>ErrorBody,
+    "LoadingBody",
+    ()=>LoadingBody
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
+// src/components/datatable/DataTableStates.tsx
+'use client';
+;
+function LoadingBody({ colSpan, size = 'xs' }) {
+    const sizeClass = {
+        xs: 'px-2 py-2 text-[12px]',
+        sm: 'px-3 py-3 text-[13px]',
+        md: 'px-3 py-3 text-[14px]'
+    }[size];
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
+            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                className: sizeClass,
+                colSpan: colSpan,
+                children: "กำลังโหลด..."
+            }, void 0, false, {
+                fileName: "[project]/apps/web/components/table/DataTableStates.tsx",
+                lineNumber: 12,
+                columnNumber: 9
+            }, this)
+        }, void 0, false, {
+            fileName: "[project]/apps/web/components/table/DataTableStates.tsx",
+            lineNumber: 11,
+            columnNumber: 7
+        }, this)
+    }, void 0, false, {
+        fileName: "[project]/apps/web/components/table/DataTableStates.tsx",
+        lineNumber: 10,
+        columnNumber: 5
+    }, this);
+}
+function ErrorBody({ colSpan, message = 'เกิดข้อผิดพลาด', size = 'xs' }) {
+    const sizeClass = {
+        xs: 'px-2 py-2 text-[12px]',
+        sm: 'px-3 py-3 text-[13px]',
+        md: 'px-3 py-3 text-[14px]'
+    }[size];
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
+            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                className: sizeClass + ' text-red-700',
+                colSpan: colSpan,
+                children: message
+            }, void 0, false, {
+                fileName: "[project]/apps/web/components/table/DataTableStates.tsx",
+                lineNumber: 31,
+                columnNumber: 9
+            }, this)
+        }, void 0, false, {
+            fileName: "[project]/apps/web/components/table/DataTableStates.tsx",
+            lineNumber: 30,
+            columnNumber: 7
+        }, this)
+    }, void 0, false, {
+        fileName: "[project]/apps/web/components/table/DataTableStates.tsx",
+        lineNumber: 29,
+        columnNumber: 5
+    }, this);
+}
+function EmptyBody({ colSpan, message = 'ไม่มีข้อมูล', size = 'xs' }) {
+    const sizeClass = {
+        xs: 'px-2 py-2 text-[12px]',
+        sm: 'px-3 py-3 text-[13px]',
+        md: 'px-3 py-3 text-[14px]'
+    }[size];
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
+            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                className: sizeClass + ' text-slate-500',
+                colSpan: colSpan,
+                children: message
+            }, void 0, false, {
+                fileName: "[project]/apps/web/components/table/DataTableStates.tsx",
+                lineNumber: 52,
+                columnNumber: 9
+            }, this)
+        }, void 0, false, {
+            fileName: "[project]/apps/web/components/table/DataTableStates.tsx",
+            lineNumber: 51,
+            columnNumber: 7
+        }, this)
+    }, void 0, false, {
+        fileName: "[project]/apps/web/components/table/DataTableStates.tsx",
+        lineNumber: 50,
+        columnNumber: 5
+    }, this);
+}
+}),
+"[project]/apps/web/components/pagination/Pagination.tsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "Pagination",
+    ()=>Pagination
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
+// src/components/pagination/Pagination.tsx
+'use client';
+;
+;
+function Pagination({ // Base mode props (optional ถ้าใช้ adapter)
+totalCount: _totalCount, pageSize: _pageSize, currentPage: _currentPage, onPageChange: _onPageChange, siblingCount = 1, onPageSizeChange, pageSizeOptions = [
+    10,
+    20,
+    50,
+    100
+], disabled = false, // Adapter mode props (แนะนำให้ใช้คู่กับ DataTable)
+pagination, totalPages, onPaginationChange }) {
+    // ----- Adapter layer (0-based -> 1-based) -----
+    const isAdapter = Boolean(onPaginationChange && pagination);
+    // ขนาดหน้า: จาก adapter (ถ้ามี) มิฉะนั้น base
+    const pageSize = isAdapter ? pagination.pageSize ?? 10 : _pageSize ?? 10;
+    // หน้า (1-based) เพื่อแสดงผล
+    const currentPage = isAdapter ? (pagination.pageIndex ?? 0) + 1 : _currentPage ?? 1;
+    // totalCount/totalPages ที่ใช้คำนวณ
+    const totalCount = (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"])(()=>{
+        if (typeof totalPages === 'number' && totalPages > 0) {
+            // ถ้า server คำนวณหน้ามาให้แล้ว ใช้เป็นแหล่งจริง
+            return totalPages * pageSize;
+        }
+        return _totalCount ?? 0;
+    }, [
+        totalPages,
+        pageSize,
+        _totalCount
+    ]);
+    // จำนวนหน้าที่คำนวณได้
+    const totalPagesComputed = (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"])(()=>totalCount > 0 ? Math.ceil(totalCount / pageSize) : 0, [
+        totalCount,
+        pageSize
+    ]);
+    // ----- handlers -----
+    const gotoPage1 = (next1)=>{
+        if (disabled) return;
+        if (totalPagesComputed === 0) return;
+        const safe = Math.max(1, Math.min(totalPagesComputed, next1));
+        if (isAdapter) {
+            onPaginationChange({
+                pageIndex: safe - 1,
+                pageSize
+            });
+        } else {
+            _onPageChange?.(safe);
+        }
+    };
+    const onPrev = ()=>gotoPage1(currentPage - 1);
+    const onNext = ()=>gotoPage1(currentPage + 1);
+    const onPageSizeChangeAdapter = (nextSize)=>{
+        if (disabled) return;
+        if (isAdapter) {
+            // ดีฟอลต์: รีเซ็ตหน้าเป็น 1 เมื่อเปลี่ยน page size
+            onPaginationChange({
+                pageIndex: 0,
+                pageSize: nextSize
+            });
+        } else {
+            onPageSizeChange?.(nextSize);
+        }
+    };
+    // ----- สร้างหน้าต่างเลขหน้า -----
+    const pageRange = (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"])(()=>{
+        if (totalPagesComputed <= 1) return [
+            1
+        ];
+        const sib = Math.max(0, siblingCount ?? 1);
+        const first = 1;
+        const last = totalPagesComputed;
+        const start = Math.max(first + 1, currentPage - sib);
+        const end = Math.min(last - 1, currentPage + sib);
+        const range = [
+            first
+        ];
+        if (start > first + 1) range.push('...');
+        for(let p = start; p <= end; p++){
+            if (p !== first && p !== last) range.push(p);
+        }
+        if (end < last - 1) range.push('...');
+        if (last > first) range.push(last);
+        return range;
+    }, [
+        currentPage,
+        siblingCount,
+        totalPagesComputed
+    ]);
+    if (totalPagesComputed === 0) return null;
+    // ----- render -----
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: `flex items-center gap-2 ${disabled ? 'opacity-50 pointer-events-none' : ''}`,
+        role: "navigation",
+        "aria-label": "Pagination",
+        children: [
+            pageSizeOptions?.length ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                className: "mr-2 flex items-center gap-1 text-sm text-gray-700",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                        children: "Per page:"
+                    }, void 0, false, {
+                        fileName: "[project]/apps/web/components/pagination/Pagination.tsx",
+                        lineNumber: 134,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
+                        className: "rounded border-gray-300 bg-white px-2 py-1 text-sm",
+                        value: pageSize,
+                        onChange: (e)=>onPageSizeChangeAdapter(Number(e.target.value)),
+                        disabled: disabled,
+                        children: pageSizeOptions.map((opt)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                value: opt,
+                                children: opt
+                            }, opt, false, {
+                                fileName: "[project]/apps/web/components/pagination/Pagination.tsx",
+                                lineNumber: 142,
+                                columnNumber: 15
+                            }, this))
+                    }, void 0, false, {
+                        fileName: "[project]/apps/web/components/pagination/Pagination.tsx",
+                        lineNumber: 135,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/apps/web/components/pagination/Pagination.tsx",
+                lineNumber: 133,
+                columnNumber: 9
+            }, this) : null,
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                className: "rounded border border-gray-300 bg-white px-2 py-1 text-sm disabled:opacity-50",
+                onClick: onPrev,
+                disabled: currentPage <= 1,
+                "aria-label": "Previous page",
+                children: "Previous"
+            }, void 0, false, {
+                fileName: "[project]/apps/web/components/pagination/Pagination.tsx",
+                lineNumber: 151,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
+                className: "flex items-center gap-1",
+                "aria-label": "Page numbers",
+                children: pageRange.map((p, idx)=>p === '...' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                        className: "px-2 text-gray-500",
+                        "aria-hidden": true,
+                        children: "…"
+                    }, `dots-${idx}`, false, {
+                        fileName: "[project]/apps/web/components/pagination/Pagination.tsx",
+                        lineNumber: 164,
+                        columnNumber: 13
+                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                        onClick: ()=>gotoPage1(p),
+                        className: [
+                            'rounded px-3 py-1 text-sm',
+                            p === currentPage ? 'bg-blue-600 text-white' : 'border border-gray-300 bg-white text-gray-800 hover:bg-gray-50'
+                        ].join(' '),
+                        "aria-current": p === currentPage ? 'page' : undefined,
+                        "aria-label": `Page ${p}`,
+                        children: p
+                    }, `p-${p}`, false, {
+                        fileName: "[project]/apps/web/components/pagination/Pagination.tsx",
+                        lineNumber: 168,
+                        columnNumber: 13
+                    }, this))
+            }, void 0, false, {
+                fileName: "[project]/apps/web/components/pagination/Pagination.tsx",
+                lineNumber: 161,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                className: "rounded border border-gray-300 bg-white px-2 py-1 text-sm disabled:opacity-50",
+                onClick: onNext,
+                disabled: currentPage >= totalPagesComputed,
+                "aria-label": "Next page",
+                children: "Next"
+            }, void 0, false, {
+                fileName: "[project]/apps/web/components/pagination/Pagination.tsx",
+                lineNumber: 187,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/apps/web/components/pagination/Pagination.tsx",
+        lineNumber: 126,
+        columnNumber: 5
+    }, this);
+}
+}),
+"[project]/apps/web/components/table/DataTablePaginationBar.tsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "DataTablePaginationBar",
+    ()=>DataTablePaginationBar
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$pagination$2f$Pagination$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/components/pagination/Pagination.tsx [app-ssr] (ecmascript)");
+// src/components/datatable/DataTablePaginationBar.tsx
+'use client';
+;
+;
+function DataTablePaginationBar({ pagination, totalPages, onPaginationChange, disabled }) {
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: "flex justify-end border-t border-slate-200 bg-white px-2 py-2",
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$pagination$2f$Pagination$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Pagination"], {
+            // --- Adapter props ของ Pagination เดิมของคุณ ---
+            pagination: pagination,
+            totalPages: totalPages,
+            onPaginationChange: onPaginationChange,
+            // --- Options ---
+            siblingCount: 2,
+            onPageSizeChange: ()=>{
+            /* ให้ Pagination ภายในจัดการเรียก onPaginationChange({ pageIndex: 0, pageSize }) */ },
+            pageSizeOptions: [
+                10,
+                20,
+                50,
+                100
+            ],
+            disabled: disabled
+        }, void 0, false, {
+            fileName: "[project]/apps/web/components/table/DataTablePaginationBar.tsx",
+            lineNumber: 22,
+            columnNumber: 7
+        }, this)
+    }, void 0, false, {
+        fileName: "[project]/apps/web/components/table/DataTablePaginationBar.tsx",
+        lineNumber: 21,
+        columnNumber: 5
+    }, this);
+}
+}),
+"[project]/apps/web/components/table/DataTable.tsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "DataTable",
+    ()=>DataTable
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/node_modules/next/navigation.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$table$2f$DataTableHeader$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/components/table/DataTableHeader.tsx [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$table$2f$DataTableBody$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/components/table/DataTableBody.tsx [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$table$2f$DataTableStates$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/components/table/DataTableStates.tsx [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$table$2f$DataTablePaginationBar$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/components/table/DataTablePaginationBar.tsx [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$cn$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/lib/cn.ts [app-ssr] (ecmascript)");
+// src/components/datatable/DataTable.tsx
+'use client';
+;
+;
+;
+;
+;
+;
+;
+;
+function DataTable(props) {
+    const { columns, rows, totalRows, pagination, onPaginationChange, sorting, onSortingChange, variant = 'default', size = 'xs', emptyMessage = 'ไม่มีข้อมูล', isLoading, isError, errorMessage, maxBodyHeight = 340, onRowClick, rowHref, defaultColMinWidth = 88, clientSideSort = false, // selection
+    selectable = false, selectedIds, onSelectionChange, getRowId } = props;
+    const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
+    const rowId = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useCallback((r)=>getRowId ? getRowId(r) : r.id, [
+        getRowId
+    ]);
+    const totalPages = totalRows && pagination ? Math.max(1, Math.ceil(totalRows / pagination.pageSize)) : undefined;
+    const containerClass = (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$cn$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])('rounded-md border border-slate-200');
+    const tableWrapperClass = 'overflow-x-auto overflow-y-auto';
+    const tableClass = 'w-full min-w-[680px]';
+    const handleRowNavigate = (row)=>{
+        if (onRowClick) {
+            onRowClick(row);
+            return;
+        }
+        if (rowHref) {
+            const path = rowHref(row);
+            if (path) router.push(path);
+            return;
+        }
+    };
+    // Toggle sort แบบ TanStack
+    const toggleSort = (col)=>{
+        const colId = String(col.accessorKey);
+        const cur = sorting ?? [];
+        const curFirst = cur[0];
+        let next;
+        if (curFirst && curFirst.id === colId) {
+            next = [
+                {
+                    id: colId,
+                    desc: !curFirst.desc
+                }
+            ];
+        } else {
+            next = [
+                {
+                    id: colId,
+                    desc: false
+                }
+            ];
+        }
+        onSortingChange?.(next);
+    };
+    // (optional) client-side sort เฉพาะกรณีอยากให้เรียงในหน้า (mock/demo)
+    const effectiveRows = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useMemo(()=>{
+        if (!clientSideSort) return rows;
+        if (!sorting?.length) return rows;
+        const { id, desc } = sorting[0];
+        const col = columns.find((c)=>String(c.accessorKey) === id);
+        const getValue = (row)=>{
+            if (col?.getSortValue) return col.getSortValue(row);
+            return row[id];
+        };
+        const cmp = (a, b)=>{
+            if (a == null && b == null) return 0;
+            if (a == null) return -1;
+            if (b == null) return 1;
+            if (typeof a === 'number' && typeof b === 'number') return a - b;
+            const da = new Date(a);
+            const db = new Date(b);
+            const aIsDate = !isNaN(da.valueOf());
+            const bIsDate = !isNaN(db.valueOf());
+            if (aIsDate && bIsDate) return da.getTime() - db.getTime();
+            return String(a).localeCompare(String(b), undefined, {
+                sensitivity: 'base',
+                numeric: true
+            });
+        };
+        const arr = [
+            ...rows
+        ]; // clone เผื่อ rows เป็น readonly
+        arr.sort((ra, rb)=>{
+            const va = getValue(ra);
+            const vb = getValue(rb);
+            const res = cmp(va, vb);
+            return desc ? -res : res;
+        });
+        return arr;
+    }, [
+        rows,
+        sorting,
+        columns,
+        clientSideSort
+    ]);
+    // +1 คอลัมน์ ถ้ามีช่อง checkbox
+    const colSpan = columns.length + (selectable ? 1 : 0);
+    // เลือกทีละแถว
+    const toggleRow = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useCallback((row, checked)=>{
+        if (!onSelectionChange || !selectedIds) return;
+        const id = rowId(row);
+        const next = new Set(selectedIds);
+        if (checked) next.add(id);
+        else next.delete(id);
+        onSelectionChange(next);
+    }, [
+        onSelectionChange,
+        selectedIds,
+        rowId
+    ]);
+    // เลือกทั้งหน้า
+    const togglePage = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useCallback((checked)=>{
+        if (!onSelectionChange || !selectedIds) return;
+        const next = new Set(selectedIds);
+        effectiveRows.forEach((r)=>{
+            const id = rowId(r);
+            if (checked) next.add(id);
+            else next.delete(id);
+        });
+        onSelectionChange(next);
+    }, [
+        onSelectionChange,
+        selectedIds,
+        effectiveRows,
+        rowId
+    ]);
+    const headerChecked = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useMemo(()=>{
+        if (!selectedIds || !effectiveRows.length) return false;
+        return effectiveRows.every((r)=>selectedIds.has(rowId(r)));
+    }, [
+        selectedIds,
+        effectiveRows,
+        rowId
+    ]);
+    const headerIndeterminate = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useMemo(()=>{
+        if (!selectedIds || !effectiveRows.length) return false;
+        const countChecked = effectiveRows.filter((r)=>selectedIds.has(rowId(r))).length;
+        return countChecked > 0 && countChecked < effectiveRows.length;
+    }, [
+        selectedIds,
+        effectiveRows,
+        rowId
+    ]);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: containerClass,
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: tableWrapperClass,
+                style: {
+                    maxHeight: maxBodyHeight
+                },
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("table", {
+                    className: tableClass,
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$table$2f$DataTableHeader$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DataTableHeader"], {
+                            columns: columns,
+                            sorting: sorting,
+                            onToggleSort: toggleSort,
+                            size: size,
+                            defaultColMinWidth: defaultColMinWidth,
+                            //   ช่องนำหน้า: checkbox select page
+                            leadingHeaderCell: selectable ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                className: "w-10 px-3 py-2 text-left",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                    type: "checkbox",
+                                    "aria-label": "Select page",
+                                    checked: headerChecked,
+                                    ref: (el)=>{
+                                        if (el) el.indeterminate = headerIndeterminate;
+                                    },
+                                    onChange: (e)=>togglePage(e.target.checked)
+                                }, void 0, false, {
+                                    fileName: "[project]/apps/web/components/table/DataTable.tsx",
+                                    lineNumber: 194,
+                                    columnNumber: 19
+                                }, void 0)
+                            }, void 0, false, {
+                                fileName: "[project]/apps/web/components/table/DataTable.tsx",
+                                lineNumber: 193,
+                                columnNumber: 17
+                            }, void 0) : undefined
+                        }, void 0, false, {
+                            fileName: "[project]/apps/web/components/table/DataTable.tsx",
+                            lineNumber: 184,
+                            columnNumber: 11
+                        }, this),
+                        isLoading && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$table$2f$DataTableStates$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["LoadingBody"], {
+                            colSpan: colSpan,
+                            size: size
+                        }, void 0, false, {
+                            fileName: "[project]/apps/web/components/table/DataTable.tsx",
+                            lineNumber: 209,
+                            columnNumber: 25
+                        }, this),
+                        isError && !isLoading && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$table$2f$DataTableStates$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["ErrorBody"], {
+                            colSpan: colSpan,
+                            message: errorMessage,
+                            size: size
+                        }, void 0, false, {
+                            fileName: "[project]/apps/web/components/table/DataTable.tsx",
+                            lineNumber: 210,
+                            columnNumber: 37
+                        }, this),
+                        !isLoading && !isError && effectiveRows.length === 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$table$2f$DataTableStates$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["EmptyBody"], {
+                            colSpan: colSpan,
+                            message: emptyMessage,
+                            size: size
+                        }, void 0, false, {
+                            fileName: "[project]/apps/web/components/table/DataTable.tsx",
+                            lineNumber: 212,
+                            columnNumber: 13
+                        }, this),
+                        !isLoading && !isError && effectiveRows.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$table$2f$DataTableBody$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DataTableBody"], {
+                            columns: columns,
+                            rows: effectiveRows,
+                            variant: variant,
+                            size: size,
+                            defaultColMinWidth: defaultColMinWidth,
+                            onRowActivate: handleRowNavigate,
+                            //   ส่งเฉพาะ “content” ของเซลล์ ไม่ใช่ <td> ครอบ
+                            renderLeadingCell: selectable ? (row)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                    type: "checkbox",
+                                    checked: !!selectedIds?.has(rowId(row)),
+                                    onChange: (e)=>toggleRow(row, e.target.checked),
+                                    onClick: (e)=>e.stopPropagation(),
+                                    "aria-label": "Select row"
+                                }, void 0, false, {
+                                    fileName: "[project]/apps/web/components/table/DataTable.tsx",
+                                    lineNumber: 228,
+                                    columnNumber: 23
+                                }, void 0) : undefined
+                        }, void 0, false, {
+                            fileName: "[project]/apps/web/components/table/DataTable.tsx",
+                            lineNumber: 217,
+                            columnNumber: 13
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/apps/web/components/table/DataTable.tsx",
+                    lineNumber: 182,
+                    columnNumber: 9
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/apps/web/components/table/DataTable.tsx",
+                lineNumber: 181,
+                columnNumber: 7
+            }, this),
+            pagination && onPaginationChange && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$table$2f$DataTablePaginationBar$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DataTablePaginationBar"], {
+                pagination: pagination,
+                totalPages: totalPages,
+                onPaginationChange: onPaginationChange,
+                disabled: isLoading
+            }, void 0, false, {
+                fileName: "[project]/apps/web/components/table/DataTable.tsx",
+                lineNumber: 244,
+                columnNumber: 9
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/apps/web/components/table/DataTable.tsx",
+        lineNumber: 180,
+        columnNumber: 5
+    }, this);
+}
+}),
+"[project]/apps/web/components/table/index.ts [app-ssr] (ecmascript) <locals>", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([]);
+// src/components/datatable/index.ts
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$table$2f$DataTable$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/components/table/DataTable.tsx [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$table$2f$DataTableHeader$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/components/table/DataTableHeader.tsx [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$table$2f$DataTableBody$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/components/table/DataTableBody.tsx [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$table$2f$DataTableStates$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/components/table/DataTableStates.tsx [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$table$2f$DataTablePaginationBar$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/components/table/DataTablePaginationBar.tsx [app-ssr] (ecmascript)");
+;
+;
+;
+;
+;
+}),
+"[project]/apps/web/components/ui/PageHeader.tsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+// src/components/ui/PageHeader.tsx
+__turbopack_context__.s([
+    "PageHeader",
+    ()=>PageHeader
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
+;
+const PageHeader = ({ title, breadcrumbs })=>{
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: "mb-6",
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
+                className: "text-2xl font-semibold text-gray-900",
+                children: title
+            }, void 0, false, {
+                fileName: "[project]/apps/web/components/ui/PageHeader.tsx",
+                lineNumber: 12,
+                columnNumber: 7
+            }, ("TURBOPACK compile-time value", void 0)),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
+                className: "mt-2 text-sm text-gray-500",
+                "aria-label": "Breadcrumb",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("ol", {
+                    className: "flex flex-wrap items-center gap-1",
+                    children: breadcrumbs?.map((bc, idx)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                            className: "flex items-center",
+                            children: [
+                                bc.href ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
+                                    href: bc.href,
+                                    className: "hover:text-gray-700 underline-offset-2 hover:underline",
+                                    children: bc.label
+                                }, void 0, false, {
+                                    fileName: "[project]/apps/web/components/ui/PageHeader.tsx",
+                                    lineNumber: 18,
+                                    columnNumber: 17
+                                }, ("TURBOPACK compile-time value", void 0)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    children: bc.label
+                                }, void 0, false, {
+                                    fileName: "[project]/apps/web/components/ui/PageHeader.tsx",
+                                    lineNumber: 25,
+                                    columnNumber: 17
+                                }, ("TURBOPACK compile-time value", void 0)),
+                                idx < breadcrumbs.length - 1 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    className: "mx-2 text-gray-400",
+                                    "aria-hidden": "true",
+                                    children: "›"
+                                }, void 0, false, {
+                                    fileName: "[project]/apps/web/components/ui/PageHeader.tsx",
+                                    lineNumber: 28,
+                                    columnNumber: 17
+                                }, ("TURBOPACK compile-time value", void 0))
+                            ]
+                        }, idx, true, {
+                            fileName: "[project]/apps/web/components/ui/PageHeader.tsx",
+                            lineNumber: 16,
+                            columnNumber: 13
+                        }, ("TURBOPACK compile-time value", void 0)))
+                }, void 0, false, {
+                    fileName: "[project]/apps/web/components/ui/PageHeader.tsx",
+                    lineNumber: 14,
+                    columnNumber: 9
+                }, ("TURBOPACK compile-time value", void 0))
+            }, void 0, false, {
+                fileName: "[project]/apps/web/components/ui/PageHeader.tsx",
+                lineNumber: 13,
+                columnNumber: 7
+            }, ("TURBOPACK compile-time value", void 0))
+        ]
+    }, void 0, true, {
+        fileName: "[project]/apps/web/components/ui/PageHeader.tsx",
+        lineNumber: 11,
+        columnNumber: 5
+    }, ("TURBOPACK compile-time value", void 0));
+};
+}),
+"[project]/apps/web/components/ui/Card.tsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "Card",
+    ()=>Card
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/node_modules/next/dist/client/app-dir/link.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$cn$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/lib/cn.ts [app-ssr] (ecmascript)");
+// components/ui/Card.tsx
+"use client";
+;
+;
+;
+const toneBg = {
+    blue: "bg-blue-50 text-blue-700",
+    green: "bg-emerald-50 text-emerald-700",
+    amber: "bg-amber-50 text-amber-700",
+    red: "bg-red-50 text-red-700",
+    violet: "bg-violet-50 text-violet-700",
+    slate: "bg-slate-50 text-slate-700"
+};
+const Card = ({ title, count, href, compact = false, loading = false, className, hideFooter = true, icon, tone = "slate", children })=>{
+    const Container = href ? __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"] : "div";
+    const showIcon = Boolean(icon);
+    const showCount = !loading && count !== undefined && count !== null && `${count}`.length > 0;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(Container, {
+        href: href,
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$cn$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("block rounded-xl border border-slate-200 bg-white shadow-sm hover:shadow-md transition-all", compact ? "p-4" : "p-5", className),
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "flex items-center gap-3",
+                children: [
+                    showIcon && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$cn$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("w-10 h-10 flex items-center justify-center rounded-lg", toneBg[tone]),
+                        children: icon
+                    }, void 0, false, {
+                        fileName: "[project]/apps/web/components/ui/Card.tsx",
+                        lineNumber: 61,
+                        columnNumber: 11
+                    }, ("TURBOPACK compile-time value", void 0)),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex-1 min-w-0",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "text-[13px] text-slate-600 md:truncate",
+                                children: title
+                            }, void 0, false, {
+                                fileName: "[project]/apps/web/components/ui/Card.tsx",
+                                lineNumber: 67,
+                                columnNumber: 11
+                            }, ("TURBOPACK compile-time value", void 0)),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "text-[22px] font-semibold text-slate-900 mt-0.5 leading-tight",
+                                children: loading ? "…" : showCount ? typeof count === "number" ? count.toLocaleString() : count : null
+                            }, void 0, false, {
+                                fileName: "[project]/apps/web/components/ui/Card.tsx",
+                                lineNumber: 70,
+                                columnNumber: 11
+                            }, ("TURBOPACK compile-time value", void 0)),
+                            children ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "mt-1 text-sm text-slate-600",
+                                children: children
+                            }, void 0, false, {
+                                fileName: "[project]/apps/web/components/ui/Card.tsx",
+                                lineNumber: 76,
+                                columnNumber: 13
+                            }, ("TURBOPACK compile-time value", void 0)) : null
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/apps/web/components/ui/Card.tsx",
+                        lineNumber: 66,
+                        columnNumber: 9
+                    }, ("TURBOPACK compile-time value", void 0))
+                ]
+            }, void 0, true, {
+                fileName: "[project]/apps/web/components/ui/Card.tsx",
+                lineNumber: 59,
+                columnNumber: 7
+            }, ("TURBOPACK compile-time value", void 0)),
+            !hideFooter && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "mt-2 text-[11px] text-slate-400",
+                children: "View all"
+            }, void 0, false, {
+                fileName: "[project]/apps/web/components/ui/Card.tsx",
+                lineNumber: 83,
+                columnNumber: 23
+            }, ("TURBOPACK compile-time value", void 0))
+        ]
+    }, void 0, true, {
+        fileName: "[project]/apps/web/components/ui/Card.tsx",
+        lineNumber: 51,
+        columnNumber: 5
+    }, ("TURBOPACK compile-time value", void 0));
+};
+}),
+"[project]/apps/web/components/ui/StatusBadge.tsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "StatusBadge",
+    ()=>StatusBadge
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$cn$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/lib/cn.ts [app-ssr] (ecmascript)");
+// components/ui/StatusBadge.tsx
+"use client";
+;
+;
+const defaultMaps = {
+    neutral: {
+        default: "text-gray-700 bg-gray-100"
+    },
+    license: {
+        Active: "text-green-700 bg-green-100",
+        Expired: "text-red-700 bg-red-100"
+    },
+    compliance: {
+        Compliant: "text-green-700 bg-green-100",
+        "Non-Compliant": "text-amber-800 bg-amber-100"
+    },
+    exception: {
+        Active: "text-green-700 bg-green-100",
+        Inactive: "text-red-700 bg-red-100"
+    },
+    severity: {
+        Low: "text-green-700 bg-green-100",
+        Medium: "text-amber-800 bg-amber-100",
+        High: "text-red-700 bg-red-100"
+    },
+    employees: {
+        Active: "text-green-700 bg-green-100",
+        Resigned: "text-red-700 bg-red-100"
+    },
+    softwareType: {
+        Standard: "text-green-700",
+        Special: "text-amber-800"
+    }
+};
+function StatusBadge({ label, variant = "neutral", map, className }) {
+    const palette = map ?? defaultMaps[variant] ?? defaultMaps.neutral;
+    const cls = palette[label] ?? palette.default ?? defaultMaps.neutral.default;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$cn$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("inline-block rounded px-2 py-0.5 text-xs font-semibold", cls, className),
+        children: label
+    }, void 0, false, {
+        fileName: "[project]/apps/web/components/ui/StatusBadge.tsx",
+        lineNumber: 60,
+        columnNumber: 5
+    }, this);
+}
+}),
+"[project]/apps/web/lib/name.ts [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "fullName",
+    ()=>fullName,
+    "fullNameEn",
+    ()=>fullNameEn,
+    "fullNameTh",
+    ()=>fullNameTh
+]);
+function fullNameTh(e) {
+    return [
+        e.firstNameTh,
+        e.lastNameTh
+    ].filter(Boolean).join(" ").trim();
+}
+function fullNameEn(e) {
+    return [
+        e.firstNameEn,
+        e.lastNameEn
+    ].filter(Boolean).join(" ").trim();
+}
+function fullName(e) {
+    const th = fullNameTh(e);
+    if (th) return th;
+    const en = fullNameEn(e);
+    return en || "";
+}
+}),
+"[project]/apps/web/lib/tables/employeeInventoryColumns.tsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "employeeColumns",
+    ()=>employeeColumns
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$ui$2f$StatusBadge$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/components/ui/StatusBadge.tsx [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$name$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/lib/name.ts [app-ssr] (ecmascript)"); // ← มีอยู่แล้วใน lib ของคุณ
+;
+;
+;
+const employeeColumns = [
+    {
+        id: "id",
+        header: "Employee ID",
+        accessorKey: "id",
+        width: 140
+    },
+    // ---------- Employee Name (ต่อ first + last ใน cell) ----------
+    {
+        id: "employeeName",
+        header: "Employee Name",
+        // ใช้อะไรก็ได้ที่เป็น keyof จริง เพื่อให้ตารางมี value เบื้องต้น
+        accessorKey: "firstNameTh",
+        width: 220,
+        // cell(value, row)
+        cell: (_value, row)=>{
+            const e = row;
+            const display = (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$name$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["fullNameTh"])(e);
+            return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                className: "font-medium",
+                children: display
+            }, void 0, false, {
+                fileName: "[project]/apps/web/lib/tables/employeeInventoryColumns.tsx",
+                lineNumber: 21,
+                columnNumber: 14
+            }, ("TURBOPACK compile-time value", void 0));
+        }
+    },
+    // ---------- สถานะ ----------
+    {
+        id: "status",
+        header: "Status",
+        accessorKey: "status",
+        width: 140,
+        // cell(value, row)
+        cell: (value)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$ui$2f$StatusBadge$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["StatusBadge"], {
+                label: String(value ?? "-"),
+                variant: "employees"
+            }, void 0, false, {
+                fileName: "[project]/apps/web/lib/tables/employeeInventoryColumns.tsx",
+                lineNumber: 32,
+                columnNumber: 22
+            }, ("TURBOPACK compile-time value", void 0))
+    },
+    // ---------- ประเภทพนักงาน ----------
+    {
+        id: "empType",
+        header: "Employee Type",
+        accessorKey: "empType",
+        width: 160
+    },
+    // ---------- ข้อมูลติดต่อ ----------
+    {
+        id: "email",
+        header: "Email",
+        accessorKey: "email",
+        width: 220
+    },
+    {
+        id: "phone",
+        header: "Phone",
+        accessorKey: "phone",
+        width: 140
+    },
+    // ---------- ตำแหน่ง/องค์กร ----------
+    {
+        id: "position",
+        header: "Position",
+        accessorKey: "position",
+        width: 180
+    },
+    {
+        id: "company",
+        header: "Company",
+        accessorKey: "company",
+        width: 160
+    },
+    {
+        id: "department",
+        header: "Department",
+        accessorKey: "department",
+        width: 180
+    },
+    {
+        id: "section",
+        header: "Section",
+        accessorKey: "section",
+        width: 160
+    },
+    {
+        id: "unit",
+        header: "Unit",
+        accessorKey: "unit",
+        width: 160
+    }
+];
+}),
+"[project]/apps/web/lib/filters.ts [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+// src/lib/utils/filters.ts
+__turbopack_context__.s([
+    "normalizeByMap",
+    ()=>normalizeByMap,
+    "toUndef",
+    ()=>toUndef,
+    "toUndefTrim",
+    ()=>toUndefTrim
+]);
+const toUndef = (v)=>v === "" ? undefined : v;
+const toUndefTrim = (v)=>{
+    if (v == null) return undefined;
+    const t = v.trim();
+    return t === "" ? undefined : t;
+};
+const normalizeByMap = (map)=>(v)=>{
+        if (!v) return "";
+        return map[v] ?? v.toString();
+    };
+}),
+"[project]/apps/web/lib/mappers/employeeFilterMappers.ts [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "toDomainFilters",
+    ()=>toDomainFilters,
+    "toServiceFilters",
+    ()=>toServiceFilters,
+    "toSimpleFilters",
+    ()=>toSimpleFilters
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$filters$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/lib/filters.ts [app-ssr] (ecmascript)");
+;
+// เผื่อรองรับพิมพ์เล็กจาก input ภายนอก/บริการอื่น
+const normStatus = (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$filters$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["normalizeByMap"])({
+    Active: "Active",
+    Inactive: "Inactive",
+    Contractor: "Contractor",
+    Intern: "Intern",
+    active: "Active",
+    inactive: "Inactive",
+    contractor: "Contractor",
+    intern: "Intern"
+});
+const normalizetype = (d)=>d ? d.trim() : "";
+function toSimpleFilters(df) {
+    return {
+        type: df.type ?? undefined,
+        status: df.status ?? undefined,
+        search: df.search ?? undefined
+    };
+}
+function toDomainFilters(sf) {
+    return {
+        type: sf?.type ?? undefined,
+        status: sf?.status ?? undefined,
+        search: sf?.search ?? undefined
+    };
+}
+function toServiceFilters(sf, sorting) {
+    const params = {
+        status: sf.status,
+        type: sf.type,
+        q: sf.search?.trim() || undefined
+    };
+    if (sorting?.length) {
+        const orderBy = sorting.map((s)=>{
+            if (s.id === "status_priority") {
+                //   ให้ service ใช้ CASE ครอบเพื่อ Active -> Resigned -> อื่น ๆ
+                return {
+                    raw: `CASE status
+                  WHEN 'Active'   THEN 0
+                  WHEN 'Resigned' THEN 1
+                  ELSE 999
+                END ${s.desc ? "DESC" : "ASC"}`
+                };
+            }
+            // กรณี field ปกติ
+            return {
+                field: s.id,
+                desc: s.desc
+            };
+        });
+        params.orderBy = orderBy;
+    }
+    return params;
+}
+}),
+"[project]/apps/web/config/config.ts [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "buildUrl",
+    ()=>buildUrl
+]);
+// config.ts
+// อ่าน ENV แล้ว cast ให้เป็น string ที่ TS รับได้ จากนั้น guard ซ้ำที่ runtime
+const SERVER_API_BASE = process.env.API_BASE ?? ("TURBOPACK compile-time value", "http://localhost:8000") ?? '';
+if (!SERVER_API_BASE) {
+    throw new Error('API base URL is not set. Please set API_BASE in .env.local (or NEXT_PUBLIC_API_BASE_URL for client).');
+}
+function buildUrl(path) {
+    // ถ้า path เป็น absolute URL อยู่แล้ว ให้คืนเลย
+    if (/^https?:\/\//i.test(path)) return path;
+    const base = SERVER_API_BASE.replace(/\/+$/, '');
+    const suffix = String(path || '').replace(/^\/+/, '');
+    return `${base}/${suffix}`;
+}
+}),
+"[project]/apps/web/lib/http.ts [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+// utils/http.ts (ของเดิม + ปรับเล็กน้อยให้ใช้ร่วมกับ base URL ได้)
+__turbopack_context__.s([
+    "http",
+    ()=>http,
+    "qs",
+    ()=>qs
+]);
+function qs(params) {
+    const sp = new URLSearchParams();
+    Object.entries(params).forEach(([k, v])=>{
+        if (v === undefined || v === null || v === '') return;
+        sp.append(k, String(v));
+    });
+    const s = sp.toString();
+    return s ? `?${s}` : '';
+}
+async function http(input, init) {
+    const res = await fetch(input, {
+        credentials: 'include',
+        headers: {
+            Accept: 'application/json',
+            ...init?.headers || {}
+        },
+        ...init
+    });
+    if (!res.ok) {
+        let msg = `HTTP ${res.status}`;
+        try {
+            const text = await res.text();
+            msg = text || msg;
+        } catch  {}
+        throw new Error(msg);
+    }
+    const parse = init?.parse ?? 'json';
+    if (parse === 'json') return await res.json();
+    if (parse === 'text') return await res.text();
+    return undefined;
+}
+}),
+"[project]/apps/web/services/exceptions.service.ts [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "assignException",
+    ()=>assignException,
+    "assignExceptionsToEmployees",
+    ()=>assignExceptionsToEmployees,
+    "getActiveExceptionDefinitions",
+    ()=>getActiveExceptionDefinitions,
+    "getExceptionAssigneesPage",
+    ()=>getExceptionAssigneesPage,
+    "getExceptionDefinitionById",
+    ()=>getExceptionDefinitionById,
+    "getExceptionDefinitions",
+    ()=>getExceptionDefinitions,
+    "listExceptionDefinitions",
+    ()=>listExceptionDefinitions,
+    "revokeAssignments",
+    ()=>revokeAssignments,
+    "unassignExceptionsFromEmployees",
+    ()=>unassignExceptionsFromEmployees
+]);
+// src/services/exceptions.service.ts
+// Frontend service (Next.js) เรียก Backend Express ตามเส้นทางจริง (ผ่าน base URL จาก ENV)
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$config$2f$config$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/config/config.ts [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$http$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/lib/http.ts [app-ssr] (ecmascript)");
+;
+;
+function toPolicyStatus(s) {
+    const v = String(s ?? "").trim().toLowerCase();
+    if (v === "active") return "Active";
+    if (v === "inactive") return "Inactive";
+    if (v === "1" || v === "true" || v === "yes" || v === "y") return "Active";
+    if (v === "0" || v === "false" || v === "no" || v === "n") return "Inactive";
+    // คงความเข้มงวดตามของเดิม: ถ้าอยาก tolerant ไม่ throw ให้ return "Inactive"
+    throw new Error(`Invalid PolicyStatus: ${s}`);
+}
+function toRiskLevel(s) {
+    const v = String(s ?? "").trim().toLowerCase();
+    if (v === "low") return "Low";
+    if (v === "medium") return "Medium";
+    if (v === "high") return "High";
+    // ถ้า backend อาจส่ง "Critical" ให้ตัดสินใจ map เป็น "High" หรือเพิ่มใน type
+    throw new Error(`Invalid RiskLevel: ${s}`);
+}
+function toNumberOrZero(v) {
+    if (v == null || v === "") return 0;
+    const n = Number(v);
+    return Number.isFinite(n) ? n : 0;
+}
+function mapBackendDefinition(row) {
+    return {
+        // RowBase
+        id: String(row.exception_id),
+        // Domain (ใช้ชื่อ field ตาม type เดิม)
+        exception_id: String(row.exception_id),
+        name: row.name ?? "",
+        status: toPolicyStatus(row.status),
+        risk: toRiskLevel(row.risk_level),
+        createdAt: row.created_at ?? "",
+        lastUpdated: row.updated_at ?? null,
+        description: row.description ?? undefined,
+        totalAssignments: toNumberOrZero(row.assignees_active)
+    };
+}
+/* ─────────────────────────────────────────────────────────────────────────────
+ * Utilities (normalize pagination result ให้เข้ากับ OffsetPage<T>)
+ * ────────────────────────────────────────────────────────────────────────────*/ function pickTotalCount(res, fallbackLen = 0) {
+    return Number(res?.totalCount ?? res?.total ?? res?.pagination?.total ?? fallbackLen);
+}
+function normalizePageInfo(res, inPage, inPageSize, totalCount) {
+    // รองรับทั้ง pageIndex (1-based) และ page
+    const page = Number(res?.pageIndex ?? res?.page ?? inPage ?? 1);
+    const pageSize = Number(res?.pageSize ?? inPageSize ?? 10);
+    const totalPages = Math.max(1, Math.ceil(Math.max(0, totalCount) / Math.max(1, pageSize)));
+    const hasPrev = typeof res?.hasPrev === "boolean" ? !!res.hasPrev : page > 1;
+    const hasNext = typeof res?.hasNext === "boolean" ? !!res.hasNext : page < totalPages;
+    return {
+        page,
+        pageSize,
+        totalPages,
+        hasPrev,
+        hasNext
+    };
+}
+async function getExceptionDefinitionById(id, signal) {
+    const url = (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$config$2f$config$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["buildUrl"])(`/exceptions/${encodeURIComponent(String(id))}`);
+    const res = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$http$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["http"])(url, {
+        method: "GET",
+        signal
+    });
+    const raw = res?.item ?? res?.data ?? res ?? null;
+    return raw ? mapBackendDefinition(raw) : null;
+}
+async function getExceptionDefinitions(q, signal) {
+    // FE → BE (1-based)
+    const query = {
+        pageIndex: q.page ?? 1,
+        pageSize: q.pageSize ?? 10,
+        sort: q.sortBy ? `${q.sortBy}:${q.sortOrder ?? "asc"}` : undefined,
+        isActive: typeof q.status === "string" ? String(q.status).toLowerCase() === "active" : undefined,
+        search: q.search
+    };
+    const url = (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$config$2f$config$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["buildUrl"])(`/exceptions${(0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$http$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["qs"])(query)}`);
+    const res = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$http$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["http"])(url, {
+        method: "GET",
+        signal
+    });
+    const rows = res?.items ?? res?.data ?? [];
+    const items = rows.map(mapBackendDefinition);
+    const totalCount = pickTotalCount(res, items.length);
+    const { page, pageSize, hasPrev, hasNext, totalPages } = normalizePageInfo(res, query.pageIndex ?? 1, query.pageSize ?? 10, totalCount);
+    //   คืนค่าเข้ากับ OffsetPage<ExceptionDefinitionRow>
+    return {
+        items,
+        totalCount,
+        page,
+        pageSize,
+        hasPrev,
+        hasNext,
+        totalPages
+    };
+}
+async function listExceptionDefinitions(q, signal) {
+    return getExceptionDefinitions(q, signal);
+}
+async function assignException(args, signal) {
+    const { definitionId, employeeIds, assignedBy } = args ?? {};
+    if (!definitionId) throw new Error("definitionId is required");
+    if (!Array.isArray(employeeIds) || employeeIds.length === 0) {
+        throw new Error("employeeIds is required");
+    }
+    const empCodes = employeeIds.map((id)=>String(id));
+    const res = await assignExceptionsToEmployees(String(definitionId), empCodes, assignedBy, signal);
+    const added = Number(res.inserted ?? 0);
+    const updated = Number(res.reactivated ?? 0);
+    return {
+        ok: true,
+        assignedCount: added + updated,
+        definitionId: String(definitionId),
+        added,
+        updated,
+        skipped: 0
+    };
+}
+async function assignExceptionsToEmployees(exceptionId, empCodes, assignedBy, signal) {
+    if (!Array.isArray(empCodes) || empCodes.length === 0) {
+        throw new Error("empCodes is required (non-empty array)");
+    }
+    const url = (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$config$2f$config$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["buildUrl"])(`/exceptions/${encodeURIComponent(String(exceptionId))}/assign`);
+    const body = JSON.stringify({
+        empCodes,
+        assignedBy
+    });
+    const res = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$http$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["http"])(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body,
+        signal
+    });
+    return {
+        inserted: Number(res?.inserted ?? 0),
+        reactivated: Number(res?.reactivated ?? 0),
+        assignmentIds: res?.assignmentIds ?? []
+    };
+}
+async function unassignExceptionsFromEmployees(exceptionId, empCodes, opts, signal) {
+    if (!Array.isArray(empCodes) || empCodes.length === 0) {
+        throw new Error("empCodes is required (non-empty array)");
+    }
+    const url = (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$config$2f$config$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["buildUrl"])(`/exceptions/${encodeURIComponent(String(exceptionId))}/revoke`);
+    const body = JSON.stringify({
+        empCodes,
+        revokedBy: opts?.revokedBy ?? undefined,
+        reason: opts?.reason ?? undefined
+    });
+    const res = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$http$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["http"])(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body,
+        signal
+    });
+    // backend คืน { updated: number } → map เป็น removed
+    return {
+        removed: Number(res?.updated ?? 0)
+    };
+}
+async function getActiveExceptionDefinitions(signal) {
+    const res = await getExceptionDefinitions({
+        page: 1,
+        pageSize: 1000,
+        status: "Active",
+        sortBy: "name",
+        sortOrder: "asc"
+    }, signal);
+    // เรียงที่ FE เพื่อความแน่นอนตาม locale
+    return (res.items ?? []).slice().sort((a, b)=>String(a.name ?? "").localeCompare(String(b.name ?? ""), undefined, {
+            sensitivity: "base",
+            numeric: true
+        }));
+}
+async function getExceptionAssigneesPage(exceptionId, q, signal) {
+    const page = Math.max(1, Number(q.page ?? 1));
+    const pageSize = Math.max(1, Number(q.pageSize ?? 10));
+    const query = {
+        page,
+        pageSize,
+        ...q.status && q.status !== "all" ? {
+            status: q.status
+        } : {}
+    };
+    const url = (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$config$2f$config$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["buildUrl"])(`/exceptions/${encodeURIComponent(String(exceptionId))}/assignees${(0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$http$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["qs"])(query)}`);
+    const res = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$http$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["http"])(url, {
+        method: "GET",
+        signal
+    });
+    const items = res?.items ?? res?.data ?? [];
+    const totalCount = Number(res?.totalCount ?? res?.total ?? res?.pagination?.total ?? items.length);
+    const pageOut = Number(res?.page ?? page);
+    const pageSizeOut = Number(res?.pageSize ?? pageSize);
+    const hasPrev = typeof res?.hasPrev === "boolean" ? !!res.hasPrev : pageOut > 1;
+    const hasNext = typeof res?.hasNext === "boolean" ? !!res.hasNext : pageOut * pageSizeOut < totalCount;
+    return {
+        items,
+        totalCount,
+        page: pageOut,
+        pageSize: pageSizeOut,
+        hasPrev,
+        hasNext
+    };
+}
+async function revokeAssignments(exceptionId, empCodes, actor, signal) {
+    const url = (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$config$2f$config$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["buildUrl"])(`/exceptions/${encodeURIComponent(String(exceptionId))}/revoke`);
+    const body = {
+        empCodes,
+        actor
+    };
+    const res = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$http$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["http"])(url, {
+        method: "POST",
+        signal,
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(body)
+    });
+    const updated = Number(res?.updated ?? res?.affected ?? 0);
+    return {
+        updated
+    };
+}
+}),
+"[project]/apps/web/hooks/useActiveExceptionDefinitions.ts [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "useActiveExceptionDefinitions",
+    ()=>useActiveExceptionDefinitions
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$services$2f$exceptions$2e$service$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/services/exceptions.service.ts [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
+;
+;
+function useActiveExceptionDefinitions() {
+    const [defs, setDefs] = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useState([]);
+    const [isLoading, setLoading] = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useState(false);
+    __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useEffect(()=>{
+        const ac = new AbortController();
+        setLoading(true);
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$services$2f$exceptions$2e$service$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getActiveExceptionDefinitions"])(ac.signal).then((list)=>setDefs(list)).catch((e)=>{
+            if (e?.name !== "AbortError") console.error(e);
+        }).finally(()=>setLoading(false));
+        return ()=>ac.abort();
+    }, []);
+    return {
+        defs,
+        isLoading
+    };
+}
+}),
+"[project]/apps/web/services/employees.service.ts [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "getEmployeeById",
+    ()=>getEmployeeById,
+    "listEmployees",
+    ()=>listEmployees,
+    "searchEmployees",
+    ()=>searchEmployees
+]);
+// src/services/employees.service.ts
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$config$2f$config$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/config/config.ts [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$http$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/lib/http.ts [app-ssr] (ecmascript)");
+;
+;
+async function listEmployees(q, signal) {
+    // page: รองรับทั้ง page (1-based) และ fallback จาก pageIndex (0-based)
+    const page = typeof q.page === "number" ? Math.max(1, Number(q.page)) : Math.max(1, Number(q.pageIndex ?? 0) + 1);
+    const sortBy = q.sort?.col ?? q.sortBy;
+    const sortOrder = q.sort?.desc != null ? q.sort.desc ? "desc" : "asc" : q.sortOrder ?? "asc";
+    //   ดึง exceptionId ที่ต้อง "exclude active assignees" ออกจากลิสต์
+    //    - ถ้าได้อัปเดต type EmployeesListQuery แล้ว: q.excludeAssignedForExceptionId
+    //    - ถ้ายัง: fallback ใช้ (q as any)
+    const excludeAssignedForExceptionId = typeof q?.excludeAssignedForExceptionId === "number" ? q.excludeAssignedForExceptionId : undefined;
+    const query = {
+        page,
+        pageSize: q.pageSize ?? 10,
+        search: q.search || undefined,
+        status: q.status || undefined,
+        type: q.type || undefined,
+        sortBy: sortBy || undefined,
+        sortOrder: sortBy ? sortOrder ?? "asc" : undefined,
+        //   แนบไปเมื่อมีค่า (ตัวเลข)
+        ...typeof excludeAssignedForExceptionId === "number" ? {
+            excludeAssignedForExceptionId
+        } : {}
+    };
+    const url = (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$config$2f$config$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["buildUrl"])(`/employees${(0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$http$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["qs"])(query)}`);
+    const res = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$http$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["http"])(url, {
+        method: "GET",
+        signal
+    });
+    const items = res?.items ?? res?.data ?? [];
+    const totalCount = Number(res?.totalCount ?? res?.total ?? res?.pagination?.total ?? items.length);
+    const pageOut = Number(res?.page ?? page);
+    const pageSizeOut = Number(res?.pageSize ?? query.pageSize ?? 10);
+    const hasPrev = typeof res?.hasPrev === "boolean" ? !!res.hasPrev : pageOut > 1;
+    const hasNext = typeof res?.hasNext === "boolean" ? !!res.hasNext : pageOut * pageSizeOut < totalCount;
+    return {
+        items,
+        totalCount,
+        page: pageOut,
+        pageSize: pageSizeOut,
+        hasPrev,
+        hasNext
+    };
+}
+async function searchEmployees(term, opts, signal) {
+    const res = await listEmployees({
+        page: 1,
+        pageSize: opts?.limit ?? 10,
+        search: term,
+        status: opts?.status
+    }, signal);
+    return res.items ?? [];
+}
+async function getEmployeeById(id, signal) {
+    const url = (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$config$2f$config$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["buildUrl"])(`/employees/${encodeURIComponent(id)}`);
+    const res = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$http$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["http"])(url, {
+        method: "GET",
+        signal
+    });
+    const row = res?.item ?? res?.data ?? res ?? null;
+    return row ?? null;
+}
+}),
+"[project]/apps/web/hooks/useEmployeeInventory.ts [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "useEmployeesInventory",
+    ()=>useEmployeesInventory
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$services$2f$employees$2e$service$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/services/employees.service.ts [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$filters$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/lib/filters.ts [app-ssr] (ecmascript)");
+"use client";
+;
+;
+;
+/**
+ * stable sort utility:
+ * - เรียงตาม priority ของ primary key ก่อน (เช่น status: Active -> Resigned)
+ * - แล้วตามด้วย secondary key (เช่น employeeId) แบบ numeric-aware
+ * - คงลำดับเดิม (stable) เมื่อตัวเทียบเท่ากัน
+ */ function stableSortByPriorityThen(list, getPrimaryKey, priority, getSecondaryKey) {
+    const prIndex = (v)=>{
+        const i = priority.indexOf(v ?? "");
+        return i >= 0 ? i : Number.MAX_SAFE_INTEGER;
+    };
+    const cmpSecondary = (a, b)=>{
+        if (a == null && b == null) return 0;
+        if (a == null) return -1;
+        if (b == null) return 1;
+        if (typeof a === "number" && typeof b === "number") return a - b;
+        const da = new Date(a);
+        const db = new Date(b);
+        const aIsDate = !isNaN(da.valueOf());
+        const bIsDate = !isNaN(db.valueOf());
+        if (aIsDate && bIsDate) return da.getTime() - db.getTime();
+        return String(a).localeCompare(String(b), undefined, {
+            numeric: true,
+            sensitivity: "base"
+        });
+    };
+    return [
+        ...list
+    ].map((item, idx)=>({
+            item,
+            idx
+        })).sort((a, b)=>{
+        const pa = prIndex(getPrimaryKey(a.item));
+        const pb = prIndex(getPrimaryKey(b.item));
+        if (pa !== pb) return pa - pb;
+        if (getSecondaryKey) {
+            const sa = getSecondaryKey(a.item);
+            const sb = getSecondaryKey(b.item);
+            const s = cmpSecondary(sa, sb);
+            if (s !== 0) return s;
+        }
+        return a.idx - b.idx; // stable
+    }).map((x)=>x.item);
+}
+function useEmployeesInventory(serverQuery, filters = {}) {
+    const [rows, setRows] = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"]([]);
+    const [totalRows, setTotalRows] = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"](0);
+    const [isLoading, setLoading] = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"](false);
+    const [isError, setError] = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"](false);
+    const [errorMessage, setErrorMessage] = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"]();
+    /**
+   * ประกอบ query สำหรับ service (object เสถียร)
+   * - pageIndex (0-based) -> page (1-based)
+   * - pageSize -> pageSize
+   * - แนบ search/status/type
+   * - ส่ง sortBy/sortOrder ถ้ามี
+   * - ส่ง excludeAssignedForExceptionId -> ให้ backend กรอง "ไม่มี Active assignment"
+   * - (mock) แนบ orderByRaw ถ้าจำเป็น
+   */ const serviceQuery = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"](()=>{
+        const { pageIndex = 0, pageSize = 10, sortBy, sortOrder } = serverQuery;
+        const status = filters.status; // EmployeeStatus | undefined
+        const type = (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$filters$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["toUndefTrim"])(filters.type);
+        const search = (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$filters$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["toUndefTrim"])(filters.search) ?? "";
+        //   จากหน้า Assign
+        const excludeAssignedForExceptionId = typeof filters?.excludeAssignedForExceptionId === "number" ? filters.excludeAssignedForExceptionId : undefined;
+        const q = {
+            page: pageIndex + 1,
+            pageSize,
+            search,
+            status,
+            type: type ?? undefined,
+            ...sortBy ? {
+                sortBy: String(sortBy)
+            } : {},
+            ...sortOrder ? {
+                sortOrder
+            } : {},
+            ...typeof excludeAssignedForExceptionId === "number" ? {
+                excludeAssignedForExceptionId
+            } : {}
+        };
+        // FE priority sort (ถ้า backend ยังไม่รองรับ)
+        if (sortBy === "status_priority" && !status /* All Status */ ) {
+            const dir = sortOrder === "desc" ? "DESC" : "ASC";
+            q.orderByRaw = [
+                `CASE status
+           WHEN 'Active'   THEN 0
+           WHEN 'Resigned' THEN 1
+           ELSE 999
+         END ${dir}`,
+                `employeeId ASC`
+            ];
+        }
+        return q;
+    }, [
+        serverQuery.pageIndex,
+        serverQuery.pageSize,
+        serverQuery.sortBy,
+        serverQuery.sortOrder,
+        filters.status,
+        filters.type,
+        filters.search,
+        filters?.excludeAssignedForExceptionId
+    ]);
+    __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"](()=>{
+        const ac = new AbortController();
+        let alive = true;
+        (async ()=>{
+            try {
+                setLoading(true);
+                setError(false);
+                setErrorMessage(undefined);
+                const res = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$services$2f$employees$2e$service$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["listEmployees"])(serviceQuery, ac.signal);
+                if (!alive) return;
+                const items = res.items ?? [];
+                const total = res.totalCount ?? res.pagination?.total ?? res.total ?? 0;
+                let nextRows = Array.isArray(items) ? items : [];
+                // FE sort สำหรับ status_priority (ถ้า backend ยังไม่รองรับ)
+                const isAllStatus = !filters.status;
+                const sortBy = serverQuery.sortBy;
+                const sortOrder = serverQuery.sortOrder;
+                if (isAllStatus && sortBy === "status_priority") {
+                    const PRIORITY = [
+                        "Active",
+                        "Resigned"
+                    ];
+                    nextRows = stableSortByPriorityThen(nextRows, (r)=>r.status, PRIORITY, (r)=>r.id);
+                    if (sortOrder === "desc") {
+                        nextRows = [
+                            ...nextRows
+                        ].reverse();
+                    }
+                }
+                setRows(nextRows);
+                setTotalRows(Number.isFinite(total) ? Number(total) : 0);
+            } catch (e) {
+                if (e?.name === "AbortError") return;
+                if (!alive) return;
+                setError(true);
+                setErrorMessage(e?.message ?? "โหลดข้อมูลพนักงานไม่สำเร็จ");
+            } finally{
+                if (alive) setLoading(false);
+            }
+        })();
+        return ()=>{
+            alive = false;
+            ac.abort();
+        };
+    }, [
+        serviceQuery,
+        filters.status,
+        serverQuery.sortBy,
+        serverQuery.sortOrder,
+        filters?.excludeAssignedForExceptionId
+    ]);
+    return {
+        rows,
+        totalRows,
+        isLoading,
+        isError,
+        errorMessage
+    };
+}
+}),
+"[project]/apps/web/components/ui/ExportSelect.tsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "ExportSelect",
+    ()=>ExportSelect
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
+// src/components/installation/ExportSelect.tsx
+"use client";
+;
+;
+function ExportSelect({ onExport }) {
+    const id = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useId();
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                htmlFor: id,
+                className: "sr-only",
+                children: "Export As"
+            }, void 0, false, {
+                fileName: "[project]/apps/web/components/ui/ExportSelect.tsx",
+                lineNumber: 12,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
+                id: id,
+                className: "rounded-md border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50",
+                defaultValue: "",
+                onChange: (e)=>{
+                    const fmt = e.target.value;
+                    if (fmt) onExport(fmt);
+                    e.currentTarget.selectedIndex = 0; // reset
+                },
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                        value: "",
+                        children: "Export As"
+                    }, void 0, false, {
+                        fileName: "[project]/apps/web/components/ui/ExportSelect.tsx",
+                        lineNumber: 25,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                        value: "csv",
+                        children: "CSV"
+                    }, void 0, false, {
+                        fileName: "[project]/apps/web/components/ui/ExportSelect.tsx",
+                        lineNumber: 26,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                        value: "xlsx",
+                        children: "Excel (.xlsx)"
+                    }, void 0, false, {
+                        fileName: "[project]/apps/web/components/ui/ExportSelect.tsx",
+                        lineNumber: 27,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                        value: "pdf",
+                        children: "PDF"
+                    }, void 0, false, {
+                        fileName: "[project]/apps/web/components/ui/ExportSelect.tsx",
+                        lineNumber: 28,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/apps/web/components/ui/ExportSelect.tsx",
+                lineNumber: 15,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true);
+}
+}),
+"[project]/apps/web/components/ui/SelectField.tsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "SelectField",
+    ()=>SelectField
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$cn$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/lib/cn.ts [app-ssr] (ecmascript)");
+// src/components/installation/SelectField.tsx
+"use client";
+;
+;
+;
+function SelectField({ label, srOnlyLabel, value, options, onChange, className, placeholder }) {
+    const id = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useId();
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: "inline-flex items-center",
+        children: [
+            label && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                htmlFor: id,
+                className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$cn$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("mr-2 text-sm text-slate-600", srOnlyLabel && "sr-only"),
+                children: label
+            }, void 0, false, {
+                fileName: "[project]/apps/web/components/ui/SelectField.tsx",
+                lineNumber: 35,
+                columnNumber: 9
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
+                id: id,
+                className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$cn$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("rounded-md border border-slate-300 bg-white px-3 py-2 text-sm", className),
+                value: value,
+                onChange: (e)=>onChange(e.target.value),
+                "aria-label": srOnlyLabel ? label : undefined,
+                children: [
+                    placeholder && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                        value: "",
+                        children: placeholder
+                    }, void 0, false, {
+                        fileName: "[project]/apps/web/components/ui/SelectField.tsx",
+                        lineNumber: 53,
+                        columnNumber: 25
+                    }, this),
+                    options.map((opt)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                            value: opt.value,
+                            children: opt.label
+                        }, opt.value, false, {
+                            fileName: "[project]/apps/web/components/ui/SelectField.tsx",
+                            lineNumber: 55,
+                            columnNumber: 11
+                        }, this))
+                ]
+            }, void 0, true, {
+                fileName: "[project]/apps/web/components/ui/SelectField.tsx",
+                lineNumber: 43,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/apps/web/components/ui/SelectField.tsx",
+        lineNumber: 32,
+        columnNumber: 5
+    }, this);
+}
+}),
+"[project]/apps/web/components/ui/MultiSelectField.tsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "MultiSelectField",
+    ()=>MultiSelectField
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$cn$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/lib/cn.ts [app-ssr] (ecmascript)");
+// src/components/ui/MultiSelectField.tsx
+"use client";
+;
+;
+;
+function MultiSelectField({ label, srOnlyLabel, value, options, onChange, placeholder = "Select...", className, buttonClassName, menuClassName, showSelectAll = true, disabled = false }) {
+    const id = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useId"]();
+    const [open, setOpen] = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"](false);
+    const ref = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"](null);
+    // ปิด dropdown เมื่อคลิกนอก
+    __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"](()=>{
+        if (!open) return;
+        const onClickOutside = (e)=>{
+            if (ref.current && !ref.current.contains(e.target)) setOpen(false);
+        };
+        const onEsc = (e)=>{
+            if (e.key === "Escape") setOpen(false);
+        };
+        window.addEventListener("mousedown", onClickOutside);
+        window.addEventListener("keydown", onEsc);
+        return ()=>{
+            window.removeEventListener("mousedown", onClickOutside);
+            window.removeEventListener("keydown", onEsc);
+        };
+    }, [
+        open
+    ]);
+    const selectedSet = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"](()=>new Set(value), [
+        value
+    ]);
+    const toggle = (val)=>{
+        const next = new Set(selectedSet);
+        if (next.has(val)) next.delete(val);
+        else next.add(val);
+        onChange(Array.from(next));
+    };
+    const allSelected = value.length > 0 && value.length === options.length;
+    const handleSelectAll = ()=>{
+        if (allSelected) {
+            onChange([]);
+        } else {
+            onChange(options.map((o)=>o.value));
+        }
+    };
+    const summaryLabel = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"](()=>{
+        if (value.length === 0) return placeholder;
+        if (value.length <= 2) {
+            const firstTwo = options.filter((o)=>selectedSet.has(o.value)).map((o)=>o.label).slice(0, 2).join(", ");
+            return value.length > 2 ? `${firstTwo} +${value.length - 2}` : firstTwo;
+        }
+        return `${value.length} selected`;
+    }, [
+        value.length,
+        placeholder,
+        options,
+        selectedSet
+    ]);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$cn$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("inline-flex items-center", className),
+        ref: ref,
+        children: [
+            label && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                htmlFor: id,
+                className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$cn$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("mr-2 text-sm text-slate-600", srOnlyLabel && "sr-only"),
+                children: label
+            }, void 0, false, {
+                fileName: "[project]/apps/web/components/ui/MultiSelectField.tsx",
+                lineNumber: 94,
+                columnNumber: 9
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                id: id,
+                type: "button",
+                className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$cn$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("relative inline-flex h-9 items-center rounded-md border border-slate-300 bg-white px-3 text-sm", "hover:bg-slate-50", disabled && "opacity-60 cursor-not-allowed", buttonClassName),
+                "aria-haspopup": "listbox",
+                "aria-expanded": open,
+                onClick: ()=>!disabled && setOpen((s)=>!s),
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$cn$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])(value.length === 0 && "text-slate-500"),
+                        children: summaryLabel
+                    }, void 0, false, {
+                        fileName: "[project]/apps/web/components/ui/MultiSelectField.tsx",
+                        lineNumber: 115,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
+                        className: "ml-2 h-4 w-4 text-slate-500",
+                        fill: "none",
+                        viewBox: "0 0 20 20",
+                        "aria-hidden": "true",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
+                            d: "M6 8l4 4 4-4",
+                            stroke: "currentColor",
+                            strokeWidth: "2"
+                        }, void 0, false, {
+                            fileName: "[project]/apps/web/components/ui/MultiSelectField.tsx",
+                            lineNumber: 124,
+                            columnNumber: 11
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "[project]/apps/web/components/ui/MultiSelectField.tsx",
+                        lineNumber: 118,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/apps/web/components/ui/MultiSelectField.tsx",
+                lineNumber: 102,
+                columnNumber: 7
+            }, this),
+            open && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                role: "menu",
+                "aria-label": label,
+                className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$cn$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("absolute z-50 mt-1 w-[280px] rounded-md border border-slate-200 bg-white shadow-lg", "max-h-64 overflow-auto p-1", menuClassName),
+                children: [
+                    showSelectAll && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$cn$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("flex cursor-pointer select-none items-center gap-2 rounded px-3 py-2 text-sm hover:bg-slate-50"),
+                        onClick: handleSelectAll,
+                        role: "menuitemcheckbox",
+                        "aria-checked": allSelected,
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                type: "checkbox",
+                                checked: allSelected,
+                                readOnly: true
+                            }, void 0, false, {
+                                fileName: "[project]/apps/web/components/ui/MultiSelectField.tsx",
+                                lineNumber: 147,
+                                columnNumber: 15
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                children: allSelected ? "Unselect all" : "Select all"
+                            }, void 0, false, {
+                                fileName: "[project]/apps/web/components/ui/MultiSelectField.tsx",
+                                lineNumber: 148,
+                                columnNumber: 15
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/apps/web/components/ui/MultiSelectField.tsx",
+                        lineNumber: 139,
+                        columnNumber: 13
+                    }, this),
+                    options.map((opt)=>{
+                        const checked = selectedSet.has(opt.value);
+                        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$cn$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("flex cursor-pointer select-none items-center gap-2 rounded px-3 py-2 text-sm hover:bg-slate-50"),
+                            onClick: ()=>toggle(opt.value),
+                            role: "menuitemcheckbox",
+                            "aria-checked": checked,
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                    type: "checkbox",
+                                    checked: checked,
+                                    readOnly: true
+                                }, void 0, false, {
+                                    fileName: "[project]/apps/web/components/ui/MultiSelectField.tsx",
+                                    lineNumber: 164,
+                                    columnNumber: 17
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    children: opt.label
+                                }, void 0, false, {
+                                    fileName: "[project]/apps/web/components/ui/MultiSelectField.tsx",
+                                    lineNumber: 165,
+                                    columnNumber: 17
+                                }, this)
+                            ]
+                        }, opt.value, true, {
+                            fileName: "[project]/apps/web/components/ui/MultiSelectField.tsx",
+                            lineNumber: 155,
+                            columnNumber: 15
+                        }, this);
+                    }),
+                    value.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "my-1 border-t border-slate-200"
+                            }, void 0, false, {
+                                fileName: "[project]/apps/web/components/ui/MultiSelectField.tsx",
+                                lineNumber: 172,
+                                columnNumber: 15
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "flex cursor-pointer select-none items-center gap-2 rounded px-3 py-2 text-sm text-red-600 hover:bg-red-50",
+                                onClick: ()=>onChange([]),
+                                role: "menuitem",
+                                children: "Clear"
+                            }, void 0, false, {
+                                fileName: "[project]/apps/web/components/ui/MultiSelectField.tsx",
+                                lineNumber: 173,
+                                columnNumber: 15
+                            }, this)
+                        ]
+                    }, void 0, true)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/apps/web/components/ui/MultiSelectField.tsx",
+                lineNumber: 129,
+                columnNumber: 9
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/apps/web/components/ui/MultiSelectField.tsx",
+        lineNumber: 92,
+        columnNumber: 5
+    }, this);
+}
+}),
+"[project]/apps/web/components/ui/SearchInput.tsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "SearchInput",
+    ()=>SearchInput
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
+// src/components/installation/SearchInput.tsx
+"use client";
+;
+;
+function SearchInput({ value, onChange, placeholder = "Search" }) {
+    const id = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useId();
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: "relative",
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                htmlFor: id,
+                className: "sr-only",
+                children: placeholder
+            }, void 0, false, {
+                fileName: "[project]/apps/web/components/ui/SearchInput.tsx",
+                lineNumber: 18,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                id: id,
+                type: "search",
+                placeholder: placeholder,
+                className: "w-full rounded-md border border-slate-300 px-3 py-2 text-sm",
+                value: value,
+                onChange: (e)=>onChange(e.target.value)
+            }, void 0, false, {
+                fileName: "[project]/apps/web/components/ui/SearchInput.tsx",
+                lineNumber: 21,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                className: "pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-slate-400",
+                children: "⌕"
+            }, void 0, false, {
+                fileName: "[project]/apps/web/components/ui/SearchInput.tsx",
+                lineNumber: 29,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/apps/web/components/ui/SearchInput.tsx",
+        lineNumber: 17,
+        columnNumber: 5
+    }, this);
+}
+}),
+"[project]/apps/web/components/ui/FilterBar.tsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "FilterBar",
+    ()=>FilterBar
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$ui$2f$ExportSelect$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/components/ui/ExportSelect.tsx [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$ui$2f$SelectField$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/components/ui/SelectField.tsx [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$ui$2f$MultiSelectField$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/components/ui/MultiSelectField.tsx [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$ui$2f$SearchInput$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/components/ui/SearchInput.tsx [app-ssr] (ecmascript)");
+// src/components/ui/FilterBar.tsx
+"use client";
+;
+;
+;
+;
+;
+;
+function FilterBar({ filters, onFiltersChange, statusOptions = [], typeOptions = [], manufacturerOptions = [], labels, onExport, rightExtra, extraFilters, onClearFilters, statusSelected, onStatusSelectedChange, typeSelected, onTypeSelectedChange, manufacturerSelected, onManufacturerSelectedChange }) {
+    const { status: statusLabel = "Status", type: typeLabel = "Type", manufacturer: manufacturerLabel = "Manufacturer", searchPlaceholder = "Search", allStatus = "All Statuses", allType = "All Types", allManufacturer = "All Manufacturers", clear: clearLabel = "Clear" } = labels ?? {};
+    const hasStatus = statusOptions.length > 0;
+    const hasType = typeOptions.length > 0;
+    const hasManufacturer = manufacturerOptions.length > 0;
+    const ALL = "__ALL__";
+    const makeOptions = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useCallback((allLabel, list, includeAll = true)=>[
+            ...includeAll ? [
+                {
+                    label: allLabel,
+                    value: ALL
+                }
+            ] : [],
+            ...list.map((v)=>({
+                    label: v,
+                    value: v
+                }))
+        ], []);
+    // single-mode options → มี ALL item
+    const statusSelectOptions = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useMemo(()=>makeOptions(allStatus, statusOptions, !statusSelected), [
+        allStatus,
+        statusOptions,
+        statusSelected,
+        makeOptions
+    ]);
+    const typeSelectOptions = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useMemo(()=>makeOptions(allType, typeOptions, !typeSelected), [
+        allType,
+        typeOptions,
+        typeSelected,
+        makeOptions
+    ]);
+    const manufacturerSelectOptions = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useMemo(()=>makeOptions(allManufacturer, manufacturerOptions, !manufacturerSelected), [
+        allManufacturer,
+        manufacturerOptions,
+        manufacturerSelected,
+        makeOptions
+    ]);
+    const safeFilters = filters ?? {};
+    const patch = (key, value)=>onFiltersChange({
+            ...safeFilters,
+            [key]: value
+        });
+    const statusValue = filters?.status ?? ALL;
+    const typeValue = filters?.type ?? ALL;
+    const manufacturerValue = filters?.manufacturer ?? ALL;
+    // type predicate helpers (ปลอดภัย + TS happy)
+    const isTStatus = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useCallback((s)=>statusOptions.includes(s), [
+        statusOptions
+    ]);
+    const isTType = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useCallback((s)=>typeOptions.includes(s), [
+        typeOptions
+    ]);
+    const isManufacturer = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useCallback((s)=>manufacturerOptions.includes(s), [
+        manufacturerOptions
+    ]);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: "space-y-3",
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "flex gap-3 items-center flex-wrap",
+                children: [
+                    hasStatus && (Array.isArray(statusSelected) ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$ui$2f$MultiSelectField$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["MultiSelectField"], {
+                        label: statusLabel,
+                        srOnlyLabel: true,
+                        options: statusOptions.map((s)=>({
+                                label: s,
+                                value: s
+                            })),
+                        value: [
+                            ...statusSelected
+                        ],
+                        onChange: (arr)=>onStatusSelectedChange?.(arr.filter(isTStatus)),
+                        placeholder: allStatus
+                    }, void 0, false, {
+                        fileName: "[project]/apps/web/components/ui/FilterBar.tsx",
+                        lineNumber: 137,
+                        columnNumber: 13
+                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$ui$2f$SelectField$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["SelectField"], {
+                        label: statusLabel,
+                        srOnlyLabel: true,
+                        value: statusValue,
+                        options: statusSelectOptions,
+                        onChange: (v)=>patch("status", !v || v === ALL ? undefined : v)
+                    }, void 0, false, {
+                        fileName: "[project]/apps/web/components/ui/FilterBar.tsx",
+                        lineNumber: 148,
+                        columnNumber: 13
+                    }, this)),
+                    hasType && (Array.isArray(typeSelected) ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$ui$2f$MultiSelectField$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["MultiSelectField"], {
+                        label: typeLabel,
+                        srOnlyLabel: true,
+                        options: typeOptions.map((s)=>({
+                                label: s,
+                                value: s
+                            })),
+                        value: [
+                            ...typeSelected
+                        ],
+                        onChange: (arr)=>onTypeSelectedChange?.(arr.filter(isTType)),
+                        placeholder: allType
+                    }, void 0, false, {
+                        fileName: "[project]/apps/web/components/ui/FilterBar.tsx",
+                        lineNumber: 162,
+                        columnNumber: 13
+                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$ui$2f$SelectField$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["SelectField"], {
+                        label: typeLabel,
+                        srOnlyLabel: true,
+                        value: typeValue,
+                        options: typeSelectOptions,
+                        onChange: (v)=>patch("type", !v || v === ALL ? undefined : v)
+                    }, void 0, false, {
+                        fileName: "[project]/apps/web/components/ui/FilterBar.tsx",
+                        lineNumber: 171,
+                        columnNumber: 13
+                    }, this)),
+                    hasManufacturer && (Array.isArray(manufacturerSelected) ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$ui$2f$MultiSelectField$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["MultiSelectField"], {
+                        label: manufacturerLabel,
+                        srOnlyLabel: true,
+                        options: manufacturerOptions.map((s)=>({
+                                label: s,
+                                value: s
+                            })),
+                        value: [
+                            ...manufacturerSelected
+                        ],
+                        onChange: (arr)=>onManufacturerSelectedChange?.(arr.filter(isManufacturer)),
+                        placeholder: allManufacturer
+                    }, void 0, false, {
+                        fileName: "[project]/apps/web/components/ui/FilterBar.tsx",
+                        lineNumber: 185,
+                        columnNumber: 13
+                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$ui$2f$SelectField$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["SelectField"], {
+                        label: manufacturerLabel,
+                        srOnlyLabel: true,
+                        value: manufacturerValue,
+                        options: manufacturerSelectOptions,
+                        onChange: (v)=>patch("manufacturer", !v || v === ALL ? undefined : v)
+                    }, void 0, false, {
+                        fileName: "[project]/apps/web/components/ui/FilterBar.tsx",
+                        lineNumber: 196,
+                        columnNumber: 13
+                    }, this)),
+                    extraFilters,
+                    onClearFilters && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                        type: "button",
+                        className: "h-10 rounded border border-slate-300 px-3 text-sm",
+                        onClick: onClearFilters,
+                        children: clearLabel
+                    }, void 0, false, {
+                        fileName: "[project]/apps/web/components/ui/FilterBar.tsx",
+                        lineNumber: 212,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "ml-auto flex items-center gap-2",
+                        children: [
+                            onExport && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$ui$2f$ExportSelect$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["ExportSelect"], {
+                                onExport: onExport
+                            }, void 0, false, {
+                                fileName: "[project]/apps/web/components/ui/FilterBar.tsx",
+                                lineNumber: 222,
+                                columnNumber: 24
+                            }, this),
+                            rightExtra
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/apps/web/components/ui/FilterBar.tsx",
+                        lineNumber: 221,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/apps/web/components/ui/FilterBar.tsx",
+                lineNumber: 133,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$ui$2f$SearchInput$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["SearchInput"], {
+                value: filters?.search ?? "",
+                onChange: (q)=>onFiltersChange({
+                        ...safeFilters,
+                        search: q
+                    }),
+                placeholder: searchPlaceholder
+            }, void 0, false, {
+                fileName: "[project]/apps/web/components/ui/FilterBar.tsx",
+                lineNumber: 227,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/apps/web/components/ui/FilterBar.tsx",
+        lineNumber: 132,
+        columnNumber: 5
+    }, this);
+}
+}),
+"[project]/apps/web/components/filters/EmployeeFilterBar.tsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "default",
+    ()=>EmployeeFilterBar
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$ui$2f$FilterBar$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/components/ui/FilterBar.tsx [app-ssr] (ecmascript)");
+"use client";
+;
+;
+;
+function EmployeeFilterBar({ filters, onFiltersChange, statusOptions = [
+    "Active",
+    "Resigned"
+], departmentOptions = [], labels, rightExtra, extraFilters }) {
+    // map UI → FilterValues<TStatus, TType> (department → type)
+    const fbFilters = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"](()=>({
+            status: filters.status,
+            type: filters.type ?? undefined,
+            manufacturer: undefined,
+            search: filters.search ?? ""
+        }), [
+        filters.status,
+        filters.type,
+        filters.search
+    ]);
+    const handleChange = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"]((next)=>{
+        onFiltersChange({
+            status: next.status ?? undefined,
+            type: next.type ?? undefined,
+            search: next.search ?? ""
+        });
+    }, [
+        onFiltersChange
+    ]);
+    // labels (default + merge)
+    const mergedLabels = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"](()=>({
+            status: labels?.status ?? "Status",
+            type: labels?.type ?? "Department",
+            searchPlaceholder: labels?.searchPlaceholder ?? "Search employees",
+            allStatus: labels?.allStatus ?? "All Status",
+            allType: labels?.allType ?? "All Departments"
+        }), [
+        labels
+    ]);
+    // แปลงเป็น readonly string[] (ไม่ต้อง as unknown as)
+    const statusOptsAsString = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"](()=>statusOptions.map((s)=>s), [
+        statusOptions
+    ]);
+    const deptOptsAsString = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"](()=>departmentOptions.map((d)=>d), [
+        departmentOptions
+    ]);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$ui$2f$FilterBar$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FilterBar"], {
+        filters: fbFilters,
+        onFiltersChange: handleChange,
+        statusOptions: statusOptsAsString,
+        typeOptions: deptOptsAsString,
+        manufacturerOptions: [],
+        labels: mergedLabels,
+        rightExtra: rightExtra,
+        extraFilters: extraFilters
+    }, void 0, false, {
+        fileName: "[project]/apps/web/components/filters/EmployeeFilterBar.tsx",
+        lineNumber: 83,
+        columnNumber: 5
+    }, this);
+}
+}),
+"[project]/apps/web/app/(app)/exceptions/[id]/assign/page.tsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "default",
+    ()=>AssignEmployeeExceptionsPage
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/node_modules/next/navigation.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$hooks$2f$useServerTableController$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/hooks/useServerTableController.ts [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$table$2f$index$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/apps/web/components/table/index.ts [app-ssr] (ecmascript) <locals>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$table$2f$DataTable$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/components/table/DataTable.tsx [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$ui$2f$PageHeader$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/components/ui/PageHeader.tsx [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$ui$2f$Card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/components/ui/Card.tsx [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$tables$2f$employeeInventoryColumns$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/lib/tables/employeeInventoryColumns.tsx [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$mappers$2f$employeeFilterMappers$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/lib/mappers/employeeFilterMappers.ts [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$hooks$2f$useActiveExceptionDefinitions$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/hooks/useActiveExceptionDefinitions.ts [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$services$2f$exceptions$2e$service$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/services/exceptions.service.ts [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$hooks$2f$useEmployeeInventory$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/hooks/useEmployeeInventory.ts [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$filters$2f$EmployeeFilterBar$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/apps/web/components/filters/EmployeeFilterBar.tsx [app-ssr] (ecmascript)");
+// src/components/assign/AssignEmployeeExceptionsPage.tsx
+"use client";
+;
+;
+;
+;
+;
+;
+;
+;
+;
+;
+;
+;
+;
+/* --------------------------------------------------------------------------------
+ * Constants
+ * ------------------------------------------------------------------------------*/ const STATUS_OPTIONS = [
+    "Active",
+    "Resigned"
+];
+// (คงเดิม) ตัวอย่าง department แบบฮาร์ดโค้ด
+const DEPARTMENT_OPTIONS = [
+    "สำนักการตลาด",
+    "สำนักข่าว",
+    "สำนักผลิตรายการ",
+    "สำนักกรรมการบริหาร",
+    "สำนักกิจการและสื่อสารองค์กร",
+    "สำนักทรัพยากรมนุษย์",
+    "สำนักดิจิทัลและกลยุทธ์สื่อใหม่",
+    "สำนักไฟฟ้ากำลัง",
+    "สำนักเทคนิคโทรทัศน์",
+    "สำนักการพาณิชย์"
+];
+function AssignEmployeeExceptionsPage() {
+    /* ------------------------ รับ exceptionId จาก URL ------------------------ */ const params = (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useParams"])(); // Next.js App Router
+    // รองรับทั้ง /exceptions/[id]/assign และ /exceptions/[exceptionId]/assign
+    const exceptionId = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"](()=>String(params?.id ?? params?.exceptionId ?? ""), [
+        params
+    ]);
+    // แปลงเป็น number (หรือ null ถ้าไม่ใช่ตัวเลข)
+    const exceptionIdNum = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"](()=>{
+        const n = Number(exceptionId);
+        return Number.isFinite(n) ? n : null;
+    }, [
+        exceptionId
+    ]);
+    /* --------------------------- Controller & Data --------------------------- */ const [domainFilters, setDomainFilters] = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"]((0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$mappers$2f$employeeFilterMappers$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["toDomainFilters"])());
+    const ctl = (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$hooks$2f$useServerTableController$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useServerTableController"])({
+        pageSize: 10,
+        defaultSort: {
+            id: "firstNameTh",
+            desc: false
+        },
+        domainFilters,
+        setDomainFilters,
+        toSimple: (df)=>(0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$mappers$2f$employeeFilterMappers$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["toSimpleFilters"])(df),
+        fromSimple: (sf)=>(0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$mappers$2f$employeeFilterMappers$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["toDomainFilters"])(sf),
+        //   รวม excludeAssignedForExceptionId เพื่อ trigger refetch เมื่อ exception เปลี่ยน
+        resetDeps: [
+            domainFilters.status,
+            domainFilters.type,
+            domainFilters.search,
+            domainFilters.excludeAssignedForExceptionId
+        ]
+    });
+    //   เมื่อ exceptionId เปลี่ยน → filter ให้ backend "ซ่อนพนักงานที่ active ใน exception นี้"
+    __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"](()=>{
+        setDomainFilters((prev)=>{
+            const next = exceptionIdNum ?? undefined;
+            if (prev.excludeAssignedForExceptionId === next) return prev;
+            return {
+                ...prev,
+                excludeAssignedForExceptionId: next
+            };
+        });
+        // รีเซ็ตหน้าไปหน้าแรก & ล้าง selection
+        ctl.setPagination({
+            pageIndex: 0,
+            pageSize: ctl.pagination.pageSize
+        });
+        setSelectedEmployeeIds([]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [
+        exceptionIdNum
+    ]);
+    // บังคับเรียง Active ก่อนเมื่อ All Status (คงเดิม)
+    __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"](()=>{
+        const isAll = ctl.simpleFilters.status == null; // undefined = All Status
+        if (isAll) {
+            ctl.setSorting([
+                {
+                    id: "status_priority",
+                    desc: false
+                },
+                {
+                    id: "firstNameTh",
+                    desc: false
+                }
+            ]);
+        } else {
+            ctl.setSorting([
+                {
+                    id: "firstNameTh",
+                    desc: false
+                }
+            ]);
+        }
+        // รีเซ็ตหน้าเมื่อเงื่อนไขเรียงเปลี่ยน
+        ctl.setPagination({
+            pageIndex: 0,
+            pageSize: ctl.pagination.pageSize
+        });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [
+        ctl.simpleFilters.status
+    ]);
+    //   hook นี้จะส่ง domainFilters (ที่มี excludeAssignedForExceptionId) เข้า service → API
+    const { rows, totalRows, isLoading, isError, errorMessage } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$hooks$2f$useEmployeeInventory$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEmployeesInventory"])(ctl.serverQuery, domainFilters);
+    /* ------------------------------ Selections ------------------------------ */ const [selectedEmployeeIds, setSelectedEmployeeIds] = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"]([]);
+    const selectedIdSet = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"](()=>new Set(selectedEmployeeIds), [
+        selectedEmployeeIds
+    ]);
+    const handleSelectionChange = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"]((next)=>{
+        setSelectedEmployeeIds(Array.from(next).map(String));
+    }, []);
+    /* ----------------- Exception Definition ที่เลือกจาก URL ----------------- */ const { defs, isLoading: loadingDefs } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$hooks$2f$useActiveExceptionDefinitions$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useActiveExceptionDefinitions"])();
+    const currentDef = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"](()=>defs.find((d)=>d.id === exceptionId), [
+        defs,
+        exceptionId
+    ]);
+    //   ดึงชื่อจาก backend รายตัว (ไม่จำกัด Active) เพื่อใช้เป็นหัวข้อเสมอ
+    const [titleName, setTitleName] = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"](null);
+    const [loadingTitle, setLoadingTitle] = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"](false);
+    __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"](()=>{
+        if (!exceptionId) {
+            setTitleName(null);
+            return;
+        }
+        const ac = new AbortController();
+        setLoadingTitle(true);
+        (async ()=>{
+            try {
+                const def = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$services$2f$exceptions$2e$service$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getExceptionDefinitionById"])(exceptionId, ac.signal);
+                setTitleName(def?.name ?? null);
+            } catch (_e) {
+                setTitleName(null);
+            } finally{
+                setLoadingTitle(false);
+            }
+        })();
+        return ()=>ac.abort();
+    }, [
+        exceptionId
+    ]);
+    /* --------------------------------- Form --------------------------------- */ const [effectiveDate, setEffectiveDate] = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"](new Date().toISOString().slice(0, 10));
+    const [note, setNote] = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"]("");
+    const canSubmit = selectedEmployeeIds.length > 0 && !!exceptionId;
+    /* -------------------------------- Submit -------------------------------- */ const [submitting, setSubmitting] = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"](false);
+    const [lastMsg, setLastMsg] = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"](null);
+    const onAssign = __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"](async ()=>{
+        if (!canSubmit || !exceptionId || selectedEmployeeIds.length === 0) return;
+        setSubmitting(true);
+        setLastMsg(null);
+        try {
+            const res = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$services$2f$exceptions$2e$service$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["assignExceptionsToEmployees"])(exceptionId, selectedEmployeeIds, undefined);
+            const inserted = Number(res.inserted ?? 0);
+            const reactivated = Number(res.reactivated ?? 0);
+            setLastMsg(`สำเร็จ: เพิ่ม ${inserted} รายการ, เปิดใช้งานใหม่ ${reactivated} รายการ`);
+            setSelectedEmployeeIds([]); // reset selection
+            // หลัง assign สำเร็จ ควร refetch เพื่อให้รายการอัปเดต (คนที่เพิ่ง assign จะถูกซ่อน)
+            ctl.setPagination({
+                pageIndex: 0,
+                pageSize: ctl.pagination.pageSize
+            });
+        } catch (e) {
+            setLastMsg(e?.message ?? "Assign ล้มเหลว (unknown error)");
+        } finally{
+            setSubmitting(false);
+        }
+    }, [
+        canSubmit,
+        exceptionId,
+        selectedEmployeeIds,
+        ctl
+    ]);
+    /* --------------------------------- Render -------------------------------- */ const headerTitle = loadingTitle || loadingDefs ? "Assign Exception → Employees" : titleName ? titleName : exceptionId ? `Exception ${exceptionId} (ไม่พบในรายการ Active)` : "Assign Exception → Employees";
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: "p-4 md:p-6 space-y-4",
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$ui$2f$PageHeader$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["PageHeader"], {
+                title: headerTitle,
+                breadcrumbs: [
+                    {
+                        label: "Exceptions",
+                        href: "/exceptions"
+                    },
+                    currentDef ? {
+                        label: currentDef.name,
+                        href: `/exceptions/${currentDef.id}`
+                    } : titleName ? {
+                        label: titleName,
+                        href: `/exceptions/${exceptionId}`
+                    } : {
+                        label: "Exception",
+                        href: `/exceptions/${exceptionId}`
+                    },
+                    {
+                        label: "Assign to Employees",
+                        href: "#"
+                    }
+                ]
+            }, void 0, false, {
+                fileName: "[project]/apps/web/app/(app)/exceptions/[id]/assign/page.tsx",
+                lineNumber: 222,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "grid grid-cols-1 md:grid-cols-3 gap-3",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$ui$2f$Card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Card"], {
+                        title: "Total Employees",
+                        count: totalRows,
+                        compact: true
+                    }, void 0, false, {
+                        fileName: "[project]/apps/web/app/(app)/exceptions/[id]/assign/page.tsx",
+                        lineNumber: 237,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$ui$2f$Card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Card"], {
+                        title: "Selected Employees",
+                        count: selectedEmployeeIds.length,
+                        compact: true
+                    }, void 0, false, {
+                        fileName: "[project]/apps/web/app/(app)/exceptions/[id]/assign/page.tsx",
+                        lineNumber: 238,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/apps/web/app/(app)/exceptions/[id]/assign/page.tsx",
+                lineNumber: 236,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$filters$2f$EmployeeFilterBar$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
+                    filters: ctl.simpleFilters,
+                    onFiltersChange: ctl.onSimpleFiltersChange,
+                    statusOptions: STATUS_OPTIONS,
+                    departmentOptions: DEPARTMENT_OPTIONS,
+                    rightExtra: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex items-center gap-2",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                            className: "rounded bg-slate-900 text-white px-4 py-2 text-sm h-9 disabled:opacity-50",
+                            disabled: !canSubmit || submitting,
+                            onClick: onAssign,
+                            "aria-disabled": !canSubmit || submitting,
+                            children: submitting ? "Assigning..." : "Confirm Assign"
+                        }, void 0, false, {
+                            fileName: "[project]/apps/web/app/(app)/exceptions/[id]/assign/page.tsx",
+                            lineNumber: 250,
+                            columnNumber: 15
+                        }, void 0)
+                    }, void 0, false, {
+                        fileName: "[project]/apps/web/app/(app)/exceptions/[id]/assign/page.tsx",
+                        lineNumber: 249,
+                        columnNumber: 13
+                    }, void 0),
+                    labels: {
+                        status: "All Status",
+                        type: "All Departments",
+                        allStatus: "All Status",
+                        allType: "All Departments",
+                        searchPlaceholder: "ค้นหา ID / ชื่อ / Department"
+                    }
+                }, void 0, false, {
+                    fileName: "[project]/apps/web/app/(app)/exceptions/[id]/assign/page.tsx",
+                    lineNumber: 243,
+                    columnNumber: 9
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/apps/web/app/(app)/exceptions/[id]/assign/page.tsx",
+                lineNumber: 242,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$components$2f$table$2f$DataTable$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DataTable"], {
+                    columns: __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$lib$2f$tables$2f$employeeInventoryColumns$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["employeeColumns"],
+                    rows: rows,
+                    totalRows: totalRows,
+                    pagination: ctl.pagination,
+                    onPaginationChange: ctl.setPagination,
+                    sorting: ctl.sorting,
+                    onSortingChange: ctl.setSorting,
+                    variant: "striped",
+                    emptyMessage: "ไม่พบพนักงาน",
+                    isLoading: isLoading,
+                    isError: isError,
+                    errorMessage: errorMessage,
+                    maxBodyHeight: 480,
+                    rowHref: (row)=>`/employees/${row.id}`,
+                    selectable: true,
+                    selectedIds: selectedIdSet,
+                    onSelectionChange: handleSelectionChange,
+                    getRowId: (row)=>row.id,
+                    selectionScope: "page"
+                }, void 0, false, {
+                    fileName: "[project]/apps/web/app/(app)/exceptions/[id]/assign/page.tsx",
+                    lineNumber: 272,
+                    columnNumber: 9
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/apps/web/app/(app)/exceptions/[id]/assign/page.tsx",
+                lineNumber: 271,
+                columnNumber: 7
+            }, this),
+            lastMsg && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$apps$2f$web$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                className: "text-sm text-slate-700",
+                children: lastMsg
+            }, void 0, false, {
+                fileName: "[project]/apps/web/app/(app)/exceptions/[id]/assign/page.tsx",
+                lineNumber: 295,
+                columnNumber: 19
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/apps/web/app/(app)/exceptions/[id]/assign/page.tsx",
+        lineNumber: 220,
+        columnNumber: 5
+    }, this);
+}
+}),
+];
+
+//# sourceMappingURL=apps_web_86644d81._.js.map

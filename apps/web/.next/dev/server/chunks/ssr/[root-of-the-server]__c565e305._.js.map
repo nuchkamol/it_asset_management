@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 68, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/970090/Desktop/it-asset-management-main/it-asset-management-main/apps/web/app/%28app%29/page.tsx"],"sourcesContent":["// apps/web/app/(app)/page.tsx  หรือ  apps/web/app/page.tsx\r\nimport { getServerSession } from \"next-auth/next\";\r\nimport { authOptions } from \"../api/auth/[...nextauth]/route\";\r\nimport { redirect } from \"next/navigation\";\r\n\r\nexport default async function Home() {\r\n  // อ่าน session ฝั่งเซิร์ฟเวอร์\r\n  const session = await getServerSession(authOptions);\r\n\r\n  // ถ้าเข้าสู่ระบบแล้ว → ไปหน้า dashboard\r\n  if (session) {\r\n    redirect(\"/dashboard\");\r\n  }\r\n\r\n  // ถ้ายังไม่ล็อกอิน → ไปหน้า login\r\n  redirect(\"/login\");\r\n}"],"names":[],"mappings":";;;;AAAA,2DAA2D;AAC3D;;;;;;AAEA;AAAA;;;;AAEe,eAAe;IAC5B,+BAA+B;IAC/B,MAAM,UAAU,MAAM,IAAA,iKAAgB,EAAC;IAEvC,wCAAwC;IACxC,IAAI,SAAS;QACX,IAAA,gNAAQ,EAAC;IACX;IAEA,kCAAkC;IAClC,IAAA,gNAAQ,EAAC;AACX"}}]
+}

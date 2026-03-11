@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 14, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/970090/Desktop/it-asset-management-main/it-asset-management-main/apps/web/app/%28app%29/page.tsx"],"sourcesContent":["import { getServerSession } from \"next-auth/next\";\r\nimport { redirect } from \"next/navigation\";\r\nimport { authOptions } from \"./api/auth/[...nextauth]/route\";\r\n\r\nexport default async function Home() {\r\n  const session = await getServerSession(authOptions);\r\n  if (session) {\r\n    redirect(\"/dashboard\");\r\n  }\r\n  redirect(\"/login\");\r\n}"],"names":[],"mappings":";;;;AAAA;AACA;AAAA;AACA;;;;AAEe,eAAe;IAC5B,MAAM,UAAU,MAAM,IAAA,iKAAgB,EAAC,0LAAW;IAClD,IAAI,SAAS;QACX,IAAA,gNAAQ,EAAC;IACX;IACA,IAAA,gNAAQ,EAAC;AACX"}}]
+}
