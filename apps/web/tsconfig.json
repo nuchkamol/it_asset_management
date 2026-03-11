@@ -1,0 +1,38 @@
+{
+  "extends": "../../packages/config/tsconfig.json",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "lib": ["dom", "es2020"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"],                     
+      "@/app/*": ["app/*"],
+      "@/components/*": ["components/*"],
+      "@/hooks/*": ["hooks/*"],
+      "@/lib/*": ["lib/*"],
+      "@/types/*": ["types/*"],
+      "@/services/*": ["services/*"],
+      "@/mock/*": ["mock/*"],
+
+      // ถ้าใช้ alias จาก monorepo อื่นด้วย ให้คงไว้
+      "@shared-ui/*": ["packages/shared-ui/src/*"],
+      "@utils/*": ["packages/utils/src/*"]
+    },
+    "allowJs": false,
+    "strict": true,
+    "noEmit": true,
+    "moduleResolution": "bundler",        //   เหมาะกับ Next 13+
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "incremental": true,
+    "plugins": [{ "name": "next" }]
+  },
+  "include": [
+    "next-env.d.ts",
+    "./**/*.ts",
+    "./**/*.tsx",
+    "next.config.js",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": ["node_modules"]
+}
